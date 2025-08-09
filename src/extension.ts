@@ -89,7 +89,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   disposable.push(
     vscode.window.registerTreeDataProvider(
-      "clipboardHistory",
+      "managerClipboardHistory",
       clipboardTreeDataProvider
     )
   );
