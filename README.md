@@ -8,24 +8,18 @@
 [![Lint Status](https://img.shields.io/github/workflow/status/agroszer/vscode.manage-all/lint.svg?label=lint)](https://github.com/agroszer/vscode.manage-all/actions)
 [![release-it](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-release--it-e10079.svg)](https://github.com/release-it/release-it)
 
-[![Dependencies Status](https://david-dm.org/agroszer/vscode.manage-all/status.svg)](https://david-dm.org/agroszer/vscode.manage-all)
-[![DevDependencies Status](https://david-dm.org/agroszer/vscode.manage-all/dev-status.svg)](https://david-dm.org/agroszer/vscode.manage-all?type=dev)
-[![Dependabot badge](https://badgen.net/dependabot/agroszer/vscode.manage-all/?icon=dependabot)](https://dependabot.com/)
-
-[![Coverage Status](https://codecov.io/gh/agroszer/vscode.manage-all/branch/master/graph/badge.svg)](https://codecov.io/gh/agroszer/vscode.manage-all)
-[![Known Vulnerabilities](https://snyk.io/test/github/agroszer/vscode.manage-all/badge.svg)](https://snyk.io/test/github/agroszer/vscode.manage-all)
-
-Keep a history of your copied and cut items and re-paste, without override the `Ctrl+C` and `Ctrl+V` keyboard shortcuts.
+Keep a history of your copied and cut items and re-paste, without overriding the `Ctrl+C` and `Ctrl+V` keyboard shortcuts.
 
 To pick a copied item, only run `Ctrl+Shift+V`
 
 ## Features
 
 1. Save history of all copied and cut items
-1. Can check copied items outside the VSCode (`"manage-all.onlyWindowFocused": false`)
+1. Can check copied items outside of VS Code (`"manage-all.onlyWindowFocused": false`)
 1. Paste from history (`Ctrl+Shift+V` => Pick and Paste)
 1. Preview the paste
-1. Snippets to paste (Ex. `clip01, clip02, ...`)
+1. Snippets to paste (Ex. `clip1, clip2, ...`)
+1. Direct commands to paste `manage-all.editor.pasteItem1` and so on. Assign keybindings.
 1. Remove selected item from history
 1. Clear all history
 1. Open copy location
@@ -81,23 +75,3 @@ Copy to history:
 
 Pick and Paste:
 ![Clipboard Manager - Pick and Paste](screenshots/pick-and-paste.gif)
-
-# Donation
-* Donation is as per your goodwill to support my development.
-* If you are interested in my future developments, i would really appreciate a small donation to support this project.
-<table border="0">
- <tr>
-    <td align="center">
-    PayPal <br>
-       <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=https://www.paypal.com/donate?hosted_button_id=5KHYY5ZDTNDSY"> <br>
-       <a href="https://www.paypal.com/donate?hosted_button_id=5KHYY5ZDTNDSY">
-          <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif">
-       </a>
-    </td>
-    <td align="center">
-       Pix (Brazil) <br>
-       <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=00020126680014BR.GOV.BCB.PIX013628571c52-8b9b-416c-a18f-8e52460608810206Doa%C3%A7%C3%A3o5204000053039865802BR5923Edgard%20Lorraine%20Messias6009SAO%20PAULO61080540900062160512NU50UnEaVM0H63042A45"> <br>
-       28571c52-8b9b-416c-a18f-8e5246060881
-    </td>
- </tr>
-</table>
