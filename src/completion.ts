@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { commandList } from "./commads/common";
 import { ClipboardManager } from "./manager";
-import { getPrefix } from "./util";
+import { getPrefixChar } from "./util";
 
 export class ClipboardCompletion implements vscode.CompletionItemProvider {
   constructor(protected manager: ClipboardManager) {}
@@ -32,7 +32,7 @@ export class ClipboardCompletion implements vscode.CompletionItemProvider {
         : this.manager.clips;
 
     const completions: vscode.CompletionItem[] = clips.map((clip, index) => {
-      const indexNumber = getPrefix(index).slice(0, -2); // Remove trailing parenthesis
+      const indexNumber = getPrefixChar(index);
 
       const c: vscode.CompletionItem = {
         label: `${prefix}${indexNumber}`,

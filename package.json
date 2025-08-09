@@ -82,6 +82,146 @@
                     "dark": "resources/dark/remove.svg",
                     "light": "resources/light/remove.svg"
                 }
+            },
+            {
+                "command": "manage-all.editor.pasteItem1",
+                "title": "Paste Clipboard Item 1"
+            },
+            {
+                "command": "manage-all.editor.pasteItem2",
+                "title": "Paste Clipboard Item 2"
+            },
+            {
+                "command": "manage-all.editor.pasteItem3",
+                "title": "Paste Clipboard Item 3"
+            },
+            {
+                "command": "manage-all.editor.pasteItem4",
+                "title": "Paste Clipboard Item 4"
+            },
+            {
+                "command": "manage-all.editor.pasteItem5",
+                "title": "Paste Clipboard Item 5"
+            },
+            {
+                "command": "manage-all.editor.pasteItem6",
+                "title": "Paste Clipboard Item 6"
+            },
+            {
+                "command": "manage-all.editor.pasteItem7",
+                "title": "Paste Clipboard Item 7"
+            },
+            {
+                "command": "manage-all.editor.pasteItem8",
+                "title": "Paste Clipboard Item 8"
+            },
+            {
+                "command": "manage-all.editor.pasteItem9",
+                "title": "Paste Clipboard Item 9"
+            },
+            {
+                "command": "manage-all.editor.pasteItema",
+                "title": "Paste Clipboard Item a"
+            },
+            {
+                "command": "manage-all.editor.pasteItemb",
+                "title": "Paste Clipboard Item b"
+            },
+            {
+                "command": "manage-all.editor.pasteItemc",
+                "title": "Paste Clipboard Item c"
+            },
+            {
+                "command": "manage-all.editor.pasteItemd",
+                "title": "Paste Clipboard Item d"
+            },
+            {
+                "command": "manage-all.editor.pasteIteme",
+                "title": "Paste Clipboard Item e"
+            },
+            {
+                "command": "manage-all.editor.pasteItemf",
+                "title": "Paste Clipboard Item f"
+            },
+            {
+                "command": "manage-all.editor.pasteItemg",
+                "title": "Paste Clipboard Item g"
+            },
+            {
+                "command": "manage-all.editor.pasteItemh",
+                "title": "Paste Clipboard Item h"
+            },
+            {
+                "command": "manage-all.editor.pasteItemi",
+                "title": "Paste Clipboard Item i"
+            },
+            {
+                "command": "manage-all.editor.pasteItemj",
+                "title": "Paste Clipboard Item j"
+            },
+            {
+                "command": "manage-all.editor.pasteItemk",
+                "title": "Paste Clipboard Item k"
+            },
+            {
+                "command": "manage-all.editor.pasteIteml",
+                "title": "Paste Clipboard Item l"
+            },
+            {
+                "command": "manage-all.editor.pasteItemm",
+                "title": "Paste Clipboard Item m"
+            },
+            {
+                "command": "manage-all.editor.pasteItemn",
+                "title": "Paste Clipboard Item n"
+            },
+            {
+                "command": "manage-all.editor.pasteItemo",
+                "title": "Paste Clipboard Item o"
+            },
+            {
+                "command": "manage-all.editor.pasteItemp",
+                "title": "Paste Clipboard Item p"
+            },
+            {
+                "command": "manage-all.editor.pasteItemq",
+                "title": "Paste Clipboard Item q"
+            },
+            {
+                "command": "manage-all.editor.pasteItemr",
+                "title": "Paste Clipboard Item r"
+            },
+            {
+                "command": "manage-all.editor.pasteItems",
+                "title": "Paste Clipboard Item s"
+            },
+            {
+                "command": "manage-all.editor.pasteItemt",
+                "title": "Paste Clipboard Item t"
+            },
+            {
+                "command": "manage-all.editor.pasteItemu",
+                "title": "Paste Clipboard Item u"
+            },
+            {
+                "command": "manage-all.editor.pasteItemv",
+                "title": "Paste Clipboard Item v"
+            },
+            {
+                "command": "manage-all.editor.pasteItemw",
+                "title": "Paste Clipboard Item w"
+            },
+            {
+                "command": "manage-all.editor.pasteItemx",
+                "title": "Paste Clipboard Item x"
+            },
+            {
+                "command": "manage-all.editor.pasteItemy",
+                "title": "Paste Clipboard Item y"
+            },
+            {
+                "command": "manage-all.editor.pasteItemz",
+                "title": "Paste Clipboard Item z"
             }
         ],
         "menus": {

@@ -13,6 +13,7 @@ import { ClipboardManager } from "./manager";
 import { Monitor } from "./monitor";
 import { ClipboardTreeDataProvider } from "./tree/history";
 import { CopyToHistoryCommand } from "./commads/copyToHistory";
+import { getPrefixChar } from "./util";
 
 let manager: ClipboardManager;
 
@@ -107,6 +108,26 @@ export async function activate(context: vscode.ExtensionContext) {
       e => e.affectsConfiguration("manage-all") && updateConfig()
     )
   );
+
+  const pasteItemHandler = (index: number) => async () => {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) return;
+    const item = manager.clips[index];
+    if (!item) return;
+    await editor.edit(editBuilder => {
+      for (const selection of editor.selections) {
+        editBuilder.replace(selection, item.value);
+      }
+    });
+  };
+
+  const commandIds: string[] = [];
+  for (let i = 0; i < 35; i++) {
+    const prefix = getPrefixChar(i);
+    const cmd = `manage-all.editor.pasteItem${prefix}`;
+    commandIds.push(cmd);
+    disposable.push(vscode.commands.registerCommand(cmd, pasteItemHandler(i)));
+  }
 
   context.subscriptions.push(...disposable);
 
