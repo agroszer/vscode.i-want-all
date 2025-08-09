@@ -21,3 +21,10 @@ export function leftPad(
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export function getPrefix(index: number): string {
+  const sep = "] ";
+  if (index < 9) return `${index + 1}${sep}`;
+  if (index < 35) return `${String.fromCharCode(97 + (index - 9))}${sep}`;
+  return "";
+}

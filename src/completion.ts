@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { commandList } from "./commads/common";
 import { ClipboardManager } from "./manager";
-import { leftPad } from "./util";
+import { getPrefix } from "./util";
 
 export class ClipboardCompletion implements vscode.CompletionItemProvider {
   constructor(protected manager: ClipboardManager) {}
@@ -31,11 +31,8 @@ export class ClipboardCompletion implements vscode.CompletionItemProvider {
         ? this.manager.clips.slice(0, maxSnippets)
         : this.manager.clips;
 
-    const maxLength = `${clips.length}`.length;
-
     const completions: vscode.CompletionItem[] = clips.map((clip, index) => {
-      // Add left zero pad from max number of clips
-      const indexNumber = leftPad(index + 1, maxLength, "0");
+      const indexNumber = getPrefix(index).slice(0, -2); // Remove trailing parenthesis
 
       const c: vscode.CompletionItem = {
         label: `${prefix}${indexNumber}`,

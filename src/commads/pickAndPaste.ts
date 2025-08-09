@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { ClipboardManager, IClipboardItem } from "../manager";
-import { leftPad } from "../util";
+import { getPrefix } from "../util";
 import { commandList } from "./common";
 
 class ClipPickItem implements vscode.QuickPickItem {
@@ -37,13 +37,11 @@ export class PickAndPasteCommand implements vscode.Disposable {
 
     const clips = this._manager.clips;
 
-    const maxLength = `${clips.length}`.length;
-
     const picks = clips.map((c, index) => {
       const item = new ClipPickItem(c);
-      const indexNumber = leftPad(index + 1, maxLength, "0");
+      const indexNumber = getPrefix(index);
 
-      item.label = `${indexNumber}) ${item.label}`;
+      item.label = `${indexNumber}${item.label}`;
 
       return item;
     });
