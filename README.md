@@ -1,22 +1,19 @@
 # Clipboard Manager
 
-[![Version](https://vsmarketplacebadges.dev/version-short/EdgardMessias.manage-all.svg)](https://marketplace.visualstudio.com/items?itemName=EdgardMessias.manage-all)
-[![Installs](https://vsmarketplacebadges.dev/installs-short/EdgardMessias.manage-all.svg)](https://marketplace.visualstudio.com/items?itemName=EdgardMessias.manage-all)
-[![Ratings](https://vsmarketplacebadges.dev/rating-short/EdgardMessias.manage-all.svg)](https://marketplace.visualstudio.com/items?itemName=EdgardMessias.manage-all)
+[![Version](https://vsmarketplacebadges.dev/version-short/agroszer.manage-all.svg)](https://marketplace.visualstudio.com/items?itemName=agroszer.manage-all)
+[![Installs](https://vsmarketplacebadges.dev/installs-short/agroszer.manage-all.svg)](https://marketplace.visualstudio.com/items?itemName=agroszer.manage-all)
+[![Ratings](https://vsmarketplacebadges.dev/rating-short/agroszer.manage-all.svg)](https://marketplace.visualstudio.com/items?itemName=agroszer.manage-all)
 
-[![Build Status](https://img.shields.io/github/workflow/status/edgardmessias/vscode.manage-all/test.svg)](https://github.com/edgardmessias/vscode.manage-all/actions)
-[![Lint Status](https://img.shields.io/github/workflow/status/edgardmessias/vscode.manage-all/lint.svg?label=lint)](https://github.com/edgardmessias/vscode.manage-all/actions)
+[![Build Status](https://img.shields.io/github/workflow/status/agroszer/vscode.manage-all/test.svg)](https://github.com/agroszer/vscode.manage-all/actions)
+[![Lint Status](https://img.shields.io/github/workflow/status/agroszer/vscode.manage-all/lint.svg?label=lint)](https://github.com/agroszer/vscode.manage-all/actions)
 [![release-it](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-release--it-e10079.svg)](https://github.com/release-it/release-it)
 
-[![Dependencies Status](https://david-dm.org/edgardmessias/vscode.manage-all/status.svg)](https://david-dm.org/edgardmessias/vscode.manage-all)
-[![DevDependencies Status](https://david-dm.org/edgardmessias/vscode.manage-all/dev-status.svg)](https://david-dm.org/edgardmessias/vscode.manage-all?type=dev)
-[![Dependabot badge](https://badgen.net/dependabot/edgardmessias/vscode.manage-all/?icon=dependabot)](https://dependabot.com/)
+[![Dependencies Status](https://david-dm.org/agroszer/vscode.manage-all/status.svg)](https://david-dm.org/agroszer/vscode.manage-all)
+[![DevDependencies Status](https://david-dm.org/agroszer/vscode.manage-all/dev-status.svg)](https://david-dm.org/agroszer/vscode.manage-all?type=dev)
+[![Dependabot badge](https://badgen.net/dependabot/agroszer/vscode.manage-all/?icon=dependabot)](https://dependabot.com/)
 
-[![Coverage Status](https://codecov.io/gh/edgardmessias/vscode.manage-all/branch/master/graph/badge.svg)](https://codecov.io/gh/edgardmessias/vscode.manage-all)
-[![Known Vulnerabilities](https://snyk.io/test/github/edgardmessias/vscode.manage-all/badge.svg)](https://snyk.io/test/github/edgardmessias/vscode.manage-all)
-
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/edgardmessias/vscode.manage-all.svg)](https://isitmaintained.com/project/edgardmessias/vscode.manage-all "Average time to resolve an issue")
-[![Percentage of issues still open](https://isitmaintained.com/badge/open/edgardmessias/vscode.manage-all.svg)](https://isitmaintained.com/project/edgardmessias/vscode.manage-all "Percentage of issues still open")
+[![Coverage Status](https://codecov.io/gh/agroszer/vscode.manage-all/branch/master/graph/badge.svg)](https://codecov.io/gh/agroszer/vscode.manage-all)
+[![Known Vulnerabilities](https://snyk.io/test/github/agroszer/vscode.manage-all/badge.svg)](https://snyk.io/test/github/agroszer/vscode.manage-all)
 
 Keep a history of your copied and cut items and re-paste, without override the `Ctrl+C` and `Ctrl+V` keyboard shortcuts.
 
