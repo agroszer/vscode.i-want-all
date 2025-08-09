@@ -89,10 +89,10 @@ jobs:
       - name: Package extension
         uses: lannonbr/vsce-action@master
         with:
-          args: "package -o clipboard-manager.vsix"
+          args: "package -o manage-all.vsix"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1
         with:
-          name: "clipboard-manager-${{ github.sha }}.vsix"
-          path: "clipboard-manager.vsix"
+          name: "manage-all-${{ github.sha }}.vsix"
+          path: "manage-all.vsix"

@@ -1,3 +1,6 @@
+> **Note:** This is a hard fork of [edgardmessias/vscode.clipboard-manager](https://github.com/edgardmessias/vscode.clipboard-manager).  
+> The extension has been renamed to **manage-all**.
+
 # [1.5.0](https://github.com/edgardmessias/vscode.clipboard-manager/compare/v1.4.2...v1.5.0) (2023-03-17)
 
 

@@ -17,7 +17,7 @@ suiteSetup(async function () {
 suite("Extension Tests", function () {
   test("Active Extension", async function () {
     const ext = vscode.extensions.getExtension(
-      "EdgardMessias.clipboard-manager"
+      "agroszer.manage-all"
     ) as vscode.Extension<any>;
 
     assert.ok(ext, "Extension not found");

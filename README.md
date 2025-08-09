@@ -1,22 +1,22 @@
 # Clipboard Manager
 
-[![Version](https://vsmarketplacebadges.dev/version-short/EdgardMessias.clipboard-manager.svg)](https://marketplace.visualstudio.com/items?itemName=EdgardMessias.clipboard-manager)
-[![Installs](https://vsmarketplacebadges.dev/installs-short/EdgardMessias.clipboard-manager.svg)](https://marketplace.visualstudio.com/items?itemName=EdgardMessias.clipboard-manager)
-[![Ratings](https://vsmarketplacebadges.dev/rating-short/EdgardMessias.clipboard-manager.svg)](https://marketplace.visualstudio.com/items?itemName=EdgardMessias.clipboard-manager)
+[![Version](https://vsmarketplacebadges.dev/version-short/EdgardMessias.manage-all.svg)](https://marketplace.visualstudio.com/items?itemName=EdgardMessias.manage-all)
+[![Installs](https://vsmarketplacebadges.dev/installs-short/EdgardMessias.manage-all.svg)](https://marketplace.visualstudio.com/items?itemName=EdgardMessias.manage-all)
+[![Ratings](https://vsmarketplacebadges.dev/rating-short/EdgardMessias.manage-all.svg)](https://marketplace.visualstudio.com/items?itemName=EdgardMessias.manage-all)
 
-[![Build Status](https://img.shields.io/github/workflow/status/edgardmessias/vscode.clipboard-manager/test.svg)](https://github.com/edgardmessias/vscode.clipboard-manager/actions)
-[![Lint Status](https://img.shields.io/github/workflow/status/edgardmessias/vscode.clipboard-manager/lint.svg?label=lint)](https://github.com/edgardmessias/vscode.clipboard-manager/actions)
+[![Build Status](https://img.shields.io/github/workflow/status/edgardmessias/vscode.manage-all/test.svg)](https://github.com/edgardmessias/vscode.manage-all/actions)
+[![Lint Status](https://img.shields.io/github/workflow/status/edgardmessias/vscode.manage-all/lint.svg?label=lint)](https://github.com/edgardmessias/vscode.manage-all/actions)
 [![release-it](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-release--it-e10079.svg)](https://github.com/release-it/release-it)
 
-[![Dependencies Status](https://david-dm.org/edgardmessias/vscode.clipboard-manager/status.svg)](https://david-dm.org/edgardmessias/vscode.clipboard-manager)
-[![DevDependencies Status](https://david-dm.org/edgardmessias/vscode.clipboard-manager/dev-status.svg)](https://david-dm.org/edgardmessias/vscode.clipboard-manager?type=dev)
-[![Dependabot badge](https://badgen.net/dependabot/edgardmessias/vscode.clipboard-manager/?icon=dependabot)](https://dependabot.com/)
+[![Dependencies Status](https://david-dm.org/edgardmessias/vscode.manage-all/status.svg)](https://david-dm.org/edgardmessias/vscode.manage-all)
+[![DevDependencies Status](https://david-dm.org/edgardmessias/vscode.manage-all/dev-status.svg)](https://david-dm.org/edgardmessias/vscode.manage-all?type=dev)
+[![Dependabot badge](https://badgen.net/dependabot/edgardmessias/vscode.manage-all/?icon=dependabot)](https://dependabot.com/)
 
-[![Coverage Status](https://codecov.io/gh/edgardmessias/vscode.clipboard-manager/branch/master/graph/badge.svg)](https://codecov.io/gh/edgardmessias/vscode.clipboard-manager)
-[![Known Vulnerabilities](https://snyk.io/test/github/edgardmessias/vscode.clipboard-manager/badge.svg)](https://snyk.io/test/github/edgardmessias/vscode.clipboard-manager)
+[![Coverage Status](https://codecov.io/gh/edgardmessias/vscode.manage-all/branch/master/graph/badge.svg)](https://codecov.io/gh/edgardmessias/vscode.manage-all)
+[![Known Vulnerabilities](https://snyk.io/test/github/edgardmessias/vscode.manage-all/badge.svg)](https://snyk.io/test/github/edgardmessias/vscode.manage-all)
 
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/edgardmessias/vscode.clipboard-manager.svg)](https://isitmaintained.com/project/edgardmessias/vscode.clipboard-manager "Average time to resolve an issue")
-[![Percentage of issues still open](https://isitmaintained.com/badge/open/edgardmessias/vscode.clipboard-manager.svg)](https://isitmaintained.com/project/edgardmessias/vscode.clipboard-manager "Percentage of issues still open")
+[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/edgardmessias/vscode.manage-all.svg)](https://isitmaintained.com/project/edgardmessias/vscode.manage-all "Average time to resolve an issue")
+[![Percentage of issues still open](https://isitmaintained.com/badge/open/edgardmessias/vscode.manage-all.svg)](https://isitmaintained.com/project/edgardmessias/vscode.manage-all "Percentage of issues still open")
 
 Keep a history of your copied and cut items and re-paste, without override the `Ctrl+C` and `Ctrl+V` keyboard shortcuts.
 
@@ -25,7 +25,7 @@ To pick a copied item, only run `Ctrl+Shift+V`
 ## Features
 
 1. Save history of all copied and cut items
-1. Can check copied items outside the VSCode (`"clipboard-manager.onlyWindowFocused": false`)
+1. Can check copied items outside the VSCode (`"manage-all.onlyWindowFocused": false`)
 1. Paste from history (`Ctrl+Shift+V` => Pick and Paste)
 1. Preview the paste
 1. Snippets to paste (Ex. `clip01, clip02, ...`)
@@ -42,37 +42,37 @@ This extension contributes the following settings (default values):
 ```js
 {
   // Avoid duplicate clips in the list
-  "clipboard-manager.avoidDuplicates": true,
+  "manage-all.avoidDuplicates": true,
 
   // Time in milliseconds to check changes in clipboard. Set zero to disable.
-  "clipboard-manager.checkInterval": 500,
+  "manage-all.checkInterval": 500,
 
   // Maximum clipboard size in bytes.
-  "clipboard-manager.maxClipboardSize": 1000000,
+  "manage-all.maxClipboardSize": 1000000,
 
   // Maximum number of clips to save in clipboard
-  "clipboard-manager.maxClips": 100,
+  "manage-all.maxClips": 100,
 
   // Move used clip to top in the list
-  "clipboard-manager.moveToTop": true,
+  "manage-all.moveToTop": true,
 
   // Get clips only from VSCode
-  "clipboard-manager.onlyWindowFocused": true,
+  "manage-all.onlyWindowFocused": true,
 
   // View a preview while you are choosing the clip
-  "clipboard-manager.preview": true,
+  "manage-all.preview": true,
 
   // Set location to save the clipboard file, set false to disable
-  "clipboard-manager.saveTo": null,
+  "manage-all.saveTo": null,
 
   // Enable completion snippets
-  "clipboard-manager.snippet.enabled": true,
+  "manage-all.snippet.enabled": true,
 
   // Maximum number of clips to suggests in snippets (Zero for all)
-  "clipboard-manager.snippet.max": 10,
+  "manage-all.snippet.max": 10,
 
   // Default prefix for snippets completion (clip1, clip2, ...)
-  "clipboard-manager.snippet.prefix": "clip"
+  "manage-all.snippet.prefix": "clip"
 }
 ```
 <!--end-settings-->

@@ -32,7 +32,7 @@ export class PickAndPasteCommand implements vscode.Disposable {
   }
 
   protected async execute() {
-    const config = vscode.workspace.getConfiguration("clipboard-manager");
+    const config = vscode.workspace.getConfiguration("manage-all");
     const preview = config.get("preview", true);
 
     const clips = this._manager.clips;

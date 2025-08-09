@@ -1,6 +1,6 @@
 {
-    "publisher": "EdgardMessias",
-    "name": "clipboard-manager",
+    "publisher": "agroszer",
+    "name": "manage-all",
     "displayName": "Clipboard Manager",
     "description": "Clipboard Manager",
     "version": "1.5.0",
@@ -12,13 +12,13 @@
         "vscode": "^1.65.0"
     },
     "bugs": {
-        "url": "https://github.com/edgardmessias/vscode.clipboard-manager/issues"
+        "url": "https://github.com/agroszer/vscode.manage-all/issues"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/edgardmessias/vscode.clipboard-manager.git"
+        "url": "https://github.com/agroszer/vscode.manage-all.git"
     },
-    "homepage": "https://github.com/edgardmessias/vscode.clipboard-manager",
+    "homepage": "https://github.com/agroszer/vscode.manage-all",
     "categories": [
         "Other"
     ],
@@ -37,14 +37,14 @@
         "viewsContainers": {
             "activitybar": [
                 {
-                    "id": "clipboard-manager",
+                    "id": "manage-all",
                     "title": "Clipboard Manager",
                     "icon": "media/clipboard.svg"
                 }
             ]
         },
         "views": {
-            "clipboard-manager": [
+            "manage-all": [
                 {
                     "id": "clipboardHistory",
                     "name": "Clipboard History"
@@ -53,22 +53,22 @@
         },
         "commands": [
             {
-                "command": "clipboard-manager.editor.copyToHistory",
+                "command": "manage-all.editor.copyToHistory",
                 "title": "Copy to Clipboard History",
                 "category": "Clipboard Manager"
             },
             {
-                "command": "clipboard-manager.editor.pickAndPaste",
+                "command": "manage-all.editor.pickAndPaste",
                 "title": "Pick and Paste",
                 "category": "Clipboard Manager"
             },
             {
-                "command": "clipboard-manager.editor.showClipboardInFile",
+                "command": "manage-all.editor.showClipboardInFile",
                 "title": "Show in the file",
                 "category": "Clipboard Manager"
             },
             {
-                "command": "clipboard-manager.history.clear",
+                "command": "manage-all.history.clear",
                 "title": "Clear History",
                 "category": "Clipboard Manager",
                 "icon": {
@@ -77,7 +77,7 @@
                 }
             },
             {
-                "command": "clipboard-manager.history.remove",
+                "command": "manage-all.history.remove",
                 "title": "Remove",
                 "category": "Clipboard Manager",
                 "icon": {
@@ -89,41 +89,41 @@
         "menus": {
             "commandPalette": [
                 {
-                    "command": "clipboard-manager.editor.pickAndPaste",
+                    "command": "manage-all.editor.pickAndPaste",
                     "when": "editorFocus && !editorReadonly"
                 },
                 {
-                    "command": "clipboard-manager.editor.showClipboardInFile",
+                    "command": "manage-all.editor.showClipboardInFile",
                     "when": "false"
                 },
                 {
-                    "command": "clipboard-manager.history.clear"
+                    "command": "manage-all.history.clear"
                 },
                 {
-                    "command": "clipboard-manager.history.remove",
+                    "command": "manage-all.history.remove",
                     "when": "false"
                 }
             ],
             "view/item/context": [
                 {
-                    "command": "clipboard-manager.editor.showClipboardInFile",
+                    "command": "manage-all.editor.showClipboardInFile",
                     "when": "viewItem =~ /^clipHistoryItem:file/",
                     "group": "0_navigation"
                 },
                 {
-                    "command": "clipboard-manager.history.remove",
+                    "command": "manage-all.history.remove",
                     "when": "viewItem =~ /^clipHistoryItem:/",
                     "group": "1_modification"
                 },
                 {
-                    "command": "clipboard-manager.history.remove",
+                    "command": "manage-all.history.remove",
                     "when": "viewItem =~ /^clipHistoryItem:/",
                     "group": "inline"
                 }
             ],
             "view/title": [
                 {
-                    "command": "clipboard-manager.history.clear",
+                    "command": "manage-all.history.clear",
                     "when": "view == clipboardHistory",
                     "group": "navigation"
                 }
@@ -131,13 +131,13 @@
         },
         "keybindings": [
             {
-                "command": "clipboard-manager.editor.copyToHistory",
+                "command": "manage-all.editor.copyToHistory",
                 "key": "Ctrl+Shift+C",
                 "mac": "Cmd+Shift+C",
                 "when": "textInputFocus && !editorReadonly"
             },
             {
-                "command": "clipboard-manager.editor.pickAndPaste",
+                "command": "manage-all.editor.pickAndPaste",
                 "key": "Ctrl+Shift+V",
                 "mac": "Cmd+Shift+V",
                 "when": "textInputFocus && !editorReadonly"
@@ -147,42 +147,42 @@
             {
                 "title": "Clipboard Manager",
                 "properties": {
-                    "clipboard-manager.avoidDuplicates": {
+                    "manage-all.avoidDuplicates": {
                         "type": "boolean",
                         "default": true,
                         "description": "Avoid duplicate clips in the list"
                     },
-                    "clipboard-manager.checkInterval": {
+                    "manage-all.checkInterval": {
                         "type": "integer",
                         "default": 500,
                         "description": "Time in milliseconds to check changes in clipboard. Set zero to disable."
                     },
-                    "clipboard-manager.maxClipboardSize": {
+                    "manage-all.maxClipboardSize": {
                         "type": "integer",
                         "default": 1000000,
                         "description": "Maximum clipboard size in bytes."
                     },
-                    "clipboard-manager.maxClips": {
+                    "manage-all.maxClips": {
                         "type": "integer",
                         "default": 100,
                         "description": "Maximum number of clips to save in clipboard"
                     },
-                    "clipboard-manager.moveToTop": {
+                    "manage-all.moveToTop": {
                         "type": "boolean",
                         "default": true,
                         "description": "Move used clip to top in the list"
                     },
-                    "clipboard-manager.onlyWindowFocused": {
+                    "manage-all.onlyWindowFocused": {
                         "type": "boolean",
                         "default": true,
                         "description": "Get clips only from VSCode"
                     },
-                    "clipboard-manager.preview": {
+                    "manage-all.preview": {
                         "type": "boolean",
                         "default": true,
                         "description": "View a preview while you are choosing the clip"
                     },
-                    "clipboard-manager.saveTo": {
+                    "manage-all.saveTo": {
                         "type": [
                             "string",
                             "null",
@@ -192,19 +192,19 @@
                         "description": "Set location to save the clipboard file, set false to disable",
                         "scope": "application"
                     },
-                    "clipboard-manager.snippet.enabled": {
+                    "manage-all.snippet.enabled": {
                         "scope": "resource",
                         "type": "boolean",
                         "default": true,
                         "description": "Enable completion snippets"
                     },
-                    "clipboard-manager.snippet.max": {
+                    "manage-all.snippet.max": {
                         "scope": "resource",
                         "type": "integer",
                         "default": 10,
                         "description": "Maximum number of clips to suggests in snippets (Zero for all)"
                     },
-                    "clipboard-manager.snippet.prefix": {
+                    "manage-all.snippet.prefix": {
                         "scope": "resource",
                         "type": "string",
                         "default": "clip",
