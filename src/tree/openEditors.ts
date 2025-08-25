@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { getPrefix } from '../util';
 
 export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
   private _onDidChangeTreeData: vscode.EventEmitter<vscode.TreeItem | undefined | null | void> = new vscode.EventEmitter<vscode.TreeItem | undefined | null | void>();
@@ -20,7 +21,7 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
     }
 
     const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
-    const editorItems = tabs.map(tab => {
+    const editorItems = tabs.map((tab, index) => {
       const item = new vscode.TreeItem(tab.label);
       if (tab.input instanceof vscode.TabInputText) {
         item.resourceUri = tab.input.uri;
@@ -30,6 +31,7 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
           arguments: [tab.input.uri],
         };
       }
+      item.label = `${getPrefix(index)}${item.label}`;
       return item;
     });
 

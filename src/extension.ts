@@ -139,6 +139,20 @@ export async function activate(context: vscode.ExtensionContext) {
     disposable.push(vscode.commands.registerCommand(cmd, pasteItemHandler(i)));
   }
 
+  const openEditorHandler = (index: number) => async () => {
+    const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
+    const tab = tabs[index];
+    if (tab && tab.input instanceof vscode.TabInputText) {
+      await vscode.window.showTextDocument(tab.input.uri, { preview: false });
+    }
+  };
+
+  for (let i = 0; i < 35; i++) {
+    const prefix = getPrefixChar(i);
+    const cmd = `i-want-all.editors.openItem${prefix}`;
+    disposable.push(vscode.commands.registerCommand(cmd, openEditorHandler(i)));
+  }
+
   context.subscriptions.push(...disposable);
 
   return {
