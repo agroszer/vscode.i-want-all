@@ -10,6 +10,11 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
     vscode.window.tabGroups.onDidChangeTabs(() => {
       this._onDidChangeTreeData.fire();
     });
+    vscode.workspace.onDidChangeConfiguration(e => {
+        if (e.affectsConfiguration('i-want-all.openEditors.showIcon')) {
+            this._onDidChangeTreeData.fire();
+        }
+    });
   }
 
   getTreeItem(element: vscode.TreeItem): vscode.TreeItem {
@@ -20,6 +25,9 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
     if (element) {
       return Promise.resolve([]);
     }
+
+    const config = vscode.workspace.getConfiguration('i-want-all');
+    const showIcon = config.get<boolean>('openEditors.showIcon', true);
 
     const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
     const editorItems = tabs.map((tab, index) => {
@@ -43,6 +51,10 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
           command: `i-want-all.editors.openItem${getPrefixChar(index)}`,
           title: `Open Editor ${getPrefixChar(index)}`,
         };
+
+        if (!showIcon) {
+            item.iconPath = new vscode.ThemeIcon(' ');
+        }
       } else {
         item.label = `${getPrefix(index)}${tab.label}`;
       }
