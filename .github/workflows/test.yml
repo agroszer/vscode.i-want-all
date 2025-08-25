@@ -89,10 +89,10 @@ jobs:
       - name: Package extension
         uses: lannonbr/vsce-action@master
         with:
-          args: "package -o manage-all.vsix"
+          args: "package -o i-want-all.vsix"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1
         with:
-          name: "manage-all-${{ github.sha }}.vsix"
-          path: "manage-all.vsix"
+          name: "i-want-all-${{ github.sha }}.vsix"
+          path: "i-want-all.vsix"

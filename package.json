@@ -1,8 +1,8 @@
 {
     "publisher": "agroszer",
-    "name": "manage-all",
-    "displayName": "All Manager",
-    "description": "All Manager",
+    "name": "i-want-all",
+    "displayName": "I want to see everything",
+    "description": "I want to see everything",
     "version": "1.5.0",
     "icon": "media/clipboard.png",
     "extensionKind": [
@@ -12,13 +12,13 @@
         "vscode": "^1.65.0"
     },
     "bugs": {
-        "url": "https://github.com/agroszer/vscode.manage-all/issues"
+        "url": "https://github.com/agroszer/vscode.i-want-all/issues"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/agroszer/vscode.manage-all.git"
+        "url": "https://github.com/agroszer/vscode.i-want-all.git"
     },
-    "homepage": "https://github.com/agroszer/vscode.manage-all",
+    "homepage": "https://github.com/agroszer/vscode.i-want-all",
     "categories": [
         "Other"
     ],
@@ -34,14 +34,14 @@
         "viewsContainers": {
             "activitybar": [
                 {
-                    "id": "manage-all",
-                    "title": "All Manager",
+                    "id": "i-want-all",
+                    "title": "I want to see everything",
                     "icon": "media/clipboard.svg"
                 }
             ]
         },
         "views": {
-            "manage-all": [
+            "i-want-all": [
                 {
                     "id": "managerClipboardHistory",
                     "name": "Clipboard History",
@@ -51,217 +51,217 @@
         },
         "commands": [
             {
-                "command": "manage-all.editor.copyToHistory",
+                "command": "i-want-all.editor.copyToHistory",
                 "title": "Copy to Clipboard History",
-                "category": "All Manager"
+                "category": "I want to see everything"
             },
             {
-                "command": "manage-all.editor.pickAndPaste",
+                "command": "i-want-all.editor.pasteItem1",
+                "title": "Paste Clipboard Item 1"
+            },
+            {
+                "command": "i-want-all.editor.pasteItem2",
+                "title": "Paste Clipboard Item 2"
+            },
+            {
+                "command": "i-want-all.editor.pasteItem3",
+                "title": "Paste Clipboard Item 3"
+            },
+            {
+                "command": "i-want-all.editor.pasteItem4",
+                "title": "Paste Clipboard Item 4"
+            },
+            {
+                "command": "i-want-all.editor.pasteItem5",
+                "title": "Paste Clipboard Item 5"
+            },
+            {
+                "command": "i-want-all.editor.pasteItem6",
+                "title": "Paste Clipboard Item 6"
+            },
+            {
+                "command": "i-want-all.editor.pasteItem7",
+                "title": "Paste Clipboard Item 7"
+            },
+            {
+                "command": "i-want-all.editor.pasteItem8",
+                "title": "Paste Clipboard Item 8"
+            },
+            {
+                "command": "i-want-all.editor.pasteItem9",
+                "title": "Paste Clipboard Item 9"
+            },
+            {
+                "command": "i-want-all.editor.pasteItema",
+                "title": "Paste Clipboard Item a"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemb",
+                "title": "Paste Clipboard Item b"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemc",
+                "title": "Paste Clipboard Item c"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemd",
+                "title": "Paste Clipboard Item d"
+            },
+            {
+                "command": "i-want-all.editor.pasteIteme",
+                "title": "Paste Clipboard Item e"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemf",
+                "title": "Paste Clipboard Item f"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemg",
+                "title": "Paste Clipboard Item g"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemh",
+                "title": "Paste Clipboard Item h"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemi",
+                "title": "Paste Clipboard Item i"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemj",
+                "title": "Paste Clipboard Item j"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemk",
+                "title": "Paste Clipboard Item k"
+            },
+            {
+                "command": "i-want-all.editor.pasteIteml",
+                "title": "Paste Clipboard Item l"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemm",
+                "title": "Paste Clipboard Item m"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemn",
+                "title": "Paste Clipboard Item n"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemo",
+                "title": "Paste Clipboard Item o"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemp",
+                "title": "Paste Clipboard Item p"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemq",
+                "title": "Paste Clipboard Item q"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemr",
+                "title": "Paste Clipboard Item r"
+            },
+            {
+                "command": "i-want-all.editor.pasteItems",
+                "title": "Paste Clipboard Item s"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemt",
+                "title": "Paste Clipboard Item t"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemu",
+                "title": "Paste Clipboard Item u"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemv",
+                "title": "Paste Clipboard Item v"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemw",
+                "title": "Paste Clipboard Item w"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemx",
+                "title": "Paste Clipboard Item x"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemy",
+                "title": "Paste Clipboard Item y"
+            },
+            {
+                "command": "i-want-all.editor.pasteItemz",
+                "title": "Paste Clipboard Item z"
+            },
+            {
+                "command": "i-want-all.editor.pickAndPaste",
                 "title": "Pick and Paste",
-                "category": "All Manager"
+                "category": "I want to see everything"
             },
             {
-                "command": "manage-all.editor.showClipboardInFile",
+                "command": "i-want-all.editor.showClipboardInFile",
                 "title": "Show in the file",
-                "category": "All Manager"
+                "category": "I want to see everything"
             },
             {
-                "command": "manage-all.history.clear",
+                "command": "i-want-all.history.clear",
                 "title": "Clear History",
-                "category": "All Manager",
+                "category": "I want to see everything",
                 "icon": {
                     "dark": "resources/dark/clear-history.svg",
                     "light": "resources/light/clear-history.svg"
                 }
             },
             {
-                "command": "manage-all.history.remove",
+                "command": "i-want-all.history.remove",
                 "title": "Remove",
-                "category": "All Manager",
+                "category": "I want to see everything",
                 "icon": {
                     "dark": "resources/dark/remove.svg",
                     "light": "resources/light/remove.svg"
                 }
-            },
-            {
-                "command": "manage-all.editor.pasteItem1",
-                "title": "Paste Clipboard Item 1"
-            },
-            {
-                "command": "manage-all.editor.pasteItem2",
-                "title": "Paste Clipboard Item 2"
-            },
-            {
-                "command": "manage-all.editor.pasteItem3",
-                "title": "Paste Clipboard Item 3"
-            },
-            {
-                "command": "manage-all.editor.pasteItem4",
-                "title": "Paste Clipboard Item 4"
-            },
-            {
-                "command": "manage-all.editor.pasteItem5",
-                "title": "Paste Clipboard Item 5"
-            },
-            {
-                "command": "manage-all.editor.pasteItem6",
-                "title": "Paste Clipboard Item 6"
-            },
-            {
-                "command": "manage-all.editor.pasteItem7",
-                "title": "Paste Clipboard Item 7"
-            },
-            {
-                "command": "manage-all.editor.pasteItem8",
-                "title": "Paste Clipboard Item 8"
-            },
-            {
-                "command": "manage-all.editor.pasteItem9",
-                "title": "Paste Clipboard Item 9"
-            },
-            {
-                "command": "manage-all.editor.pasteItema",
-                "title": "Paste Clipboard Item a"
-            },
-            {
-                "command": "manage-all.editor.pasteItemb",
-                "title": "Paste Clipboard Item b"
-            },
-            {
-                "command": "manage-all.editor.pasteItemc",
-                "title": "Paste Clipboard Item c"
-            },
-            {
-                "command": "manage-all.editor.pasteItemd",
-                "title": "Paste Clipboard Item d"
-            },
-            {
-                "command": "manage-all.editor.pasteIteme",
-                "title": "Paste Clipboard Item e"
-            },
-            {
-                "command": "manage-all.editor.pasteItemf",
-                "title": "Paste Clipboard Item f"
-            },
-            {
-                "command": "manage-all.editor.pasteItemg",
-                "title": "Paste Clipboard Item g"
-            },
-            {
-                "command": "manage-all.editor.pasteItemh",
-                "title": "Paste Clipboard Item h"
-            },
-            {
-                "command": "manage-all.editor.pasteItemi",
-                "title": "Paste Clipboard Item i"
-            },
-            {
-                "command": "manage-all.editor.pasteItemj",
-                "title": "Paste Clipboard Item j"
-            },
-            {
-                "command": "manage-all.editor.pasteItemk",
-                "title": "Paste Clipboard Item k"
-            },
-            {
-                "command": "manage-all.editor.pasteIteml",
-                "title": "Paste Clipboard Item l"
-            },
-            {
-                "command": "manage-all.editor.pasteItemm",
-                "title": "Paste Clipboard Item m"
-            },
-            {
-                "command": "manage-all.editor.pasteItemn",
-                "title": "Paste Clipboard Item n"
-            },
-            {
-                "command": "manage-all.editor.pasteItemo",
-                "title": "Paste Clipboard Item o"
-            },
-            {
-                "command": "manage-all.editor.pasteItemp",
-                "title": "Paste Clipboard Item p"
-            },
-            {
-                "command": "manage-all.editor.pasteItemq",
-                "title": "Paste Clipboard Item q"
-            },
-            {
-                "command": "manage-all.editor.pasteItemr",
-                "title": "Paste Clipboard Item r"
-            },
-            {
-                "command": "manage-all.editor.pasteItems",
-                "title": "Paste Clipboard Item s"
-            },
-            {
-                "command": "manage-all.editor.pasteItemt",
-                "title": "Paste Clipboard Item t"
-            },
-            {
-                "command": "manage-all.editor.pasteItemu",
-                "title": "Paste Clipboard Item u"
-            },
-            {
-                "command": "manage-all.editor.pasteItemv",
-                "title": "Paste Clipboard Item v"
-            },
-            {
-                "command": "manage-all.editor.pasteItemw",
-                "title": "Paste Clipboard Item w"
-            },
-            {
-                "command": "manage-all.editor.pasteItemx",
-                "title": "Paste Clipboard Item x"
-            },
-            {
-                "command": "manage-all.editor.pasteItemy",
-                "title": "Paste Clipboard Item y"
-            },
-            {
-                "command": "manage-all.editor.pasteItemz",
-                "title": "Paste Clipboard Item z"
             }
         ],
         "menus": {
             "commandPalette": [
                 {
-                    "command": "manage-all.editor.pickAndPaste",
+                    "command": "i-want-all.editor.pickAndPaste",
                     "when": "editorFocus && !editorReadonly"
                 },
                 {
-                    "command": "manage-all.editor.showClipboardInFile",
+                    "command": "i-want-all.editor.showClipboardInFile",
                     "when": "false"
                 },
                 {
-                    "command": "manage-all.history.clear"
+                    "command": "i-want-all.history.clear"
                 },
                 {
-                    "command": "manage-all.history.remove",
+                    "command": "i-want-all.history.remove",
                     "when": "false"
                 }
             ],
             "view/item/context": [
                 {
-                    "command": "manage-all.editor.showClipboardInFile",
+                    "command": "i-want-all.editor.showClipboardInFile",
                     "when": "viewItem =~ /^clipHistoryItem:file/",
                     "group": "0_navigation"
                 },
                 {
-                    "command": "manage-all.history.remove",
+                    "command": "i-want-all.history.remove",
                     "when": "viewItem =~ /^clipHistoryItem:/",
                     "group": "1_modification"
                 },
                 {
-                    "command": "manage-all.history.remove",
+                    "command": "i-want-all.history.remove",
                     "when": "viewItem =~ /^clipHistoryItem:/",
                     "group": "inline"
                 }
             ],
             "view/title": [
                 {
-                    "command": "manage-all.history.clear",
+                    "command": "i-want-all.history.clear",
                     "when": "view == managerClipboardHistory",
                     "group": "navigation"
                 }
@@ -269,13 +269,13 @@
         },
         "keybindings": [
             {
-                "command": "manage-all.editor.copyToHistory",
+                "command": "i-want-all.editor.copyToHistory",
                 "key": "Ctrl+Shift+C",
                 "mac": "Cmd+Shift+C",
                 "when": "textInputFocus && !editorReadonly"
             },
             {
-                "command": "manage-all.editor.pickAndPaste",
+                "command": "i-want-all.editor.pickAndPaste",
                 "key": "Ctrl+Shift+V",
                 "mac": "Cmd+Shift+V",
                 "when": "textInputFocus && !editorReadonly"
@@ -283,44 +283,44 @@
         ],
         "configuration": [
             {
-                "title": "All Manager",
+                "title": "I want to see everything",
                 "properties": {
-                    "manage-all.avoidDuplicates": {
+                    "i-want-all.avoidDuplicates": {
                         "type": "boolean",
                         "default": true,
                         "description": "Avoid duplicate clips in the list"
                     },
-                    "manage-all.checkInterval": {
+                    "i-want-all.checkInterval": {
                         "type": "integer",
                         "default": 500,
                         "description": "Time in milliseconds to check changes in clipboard. Set zero to disable."
                     },
-                    "manage-all.maxClipboardSize": {
+                    "i-want-all.maxClipboardSize": {
                         "type": "integer",
                         "default": 1000000,
                         "description": "Maximum clipboard size in bytes."
                     },
-                    "manage-all.maxClips": {
+                    "i-want-all.maxClips": {
                         "type": "integer",
                         "default": 100,
                         "description": "Maximum number of clips to save in clipboard"
                     },
-                    "manage-all.moveToTop": {
+                    "i-want-all.moveToTop": {
                         "type": "boolean",
                         "default": true,
                         "description": "Move used clip to top in the list"
                     },
-                    "manage-all.onlyWindowFocused": {
+                    "i-want-all.onlyWindowFocused": {
                         "type": "boolean",
                         "default": true,
                         "description": "Get clips only from VSCode"
                     },
-                    "manage-all.preview": {
+                    "i-want-all.preview": {
                         "type": "boolean",
                         "default": true,
                         "description": "View a preview while you are choosing the clip"
                     },
-                    "manage-all.saveTo": {
+                    "i-want-all.saveTo": {
                         "type": [
                             "string",
                             "null",
@@ -330,19 +330,19 @@
                         "description": "Set location to save the clipboard file, set false to disable",
                         "scope": "application"
                     },
-                    "manage-all.snippet.enabled": {
+                    "i-want-all.snippet.enabled": {
                         "scope": "resource",
                         "type": "boolean",
                         "default": true,
                         "description": "Enable completion snippets"
                     },
-                    "manage-all.snippet.max": {
+                    "i-want-all.snippet.max": {
                         "scope": "resource",
                         "type": "integer",
                         "default": 10,
                         "description": "Maximum number of clips to suggests in snippets (Zero for all)"
                     },
-                    "manage-all.snippet.prefix": {
+                    "i-want-all.snippet.prefix": {
                         "scope": "resource",
                         "type": "string",
                         "default": "clip",
