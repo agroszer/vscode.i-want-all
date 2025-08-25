@@ -38,11 +38,11 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
 
         item.label = `${getPrefix(index)}${filename}`;
         item.description = truncatedDir;
+        item.resourceUri = uri;
         item.command = {
           command: `i-want-all.editors.openItem${getPrefixChar(index)}`,
           title: `Open Editor ${getPrefixChar(index)}`,
         };
-        item.iconPath = vscode.ThemeIcon.File;
       } else {
         item.label = `${getPrefix(index)}${tab.label}`;
       }
