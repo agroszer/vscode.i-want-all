@@ -12,6 +12,7 @@ import { ClipboardCompletion } from "./completion";
 import { ClipboardManager } from "./manager";
 import { Monitor } from "./monitor";
 import { ClipboardTreeDataProvider } from "./tree/history";
+import { OpenEditorsProvider } from "./tree/openEditors";
 import { CopyToHistoryCommand } from "./commads/copyToHistory";
 import { getPrefixChar } from "./util";
 
@@ -87,6 +88,15 @@ export async function activate(context: vscode.ExtensionContext) {
 
   const clipboardTreeDataProvider = new ClipboardTreeDataProvider(manager);
   disposable.push(clipboardTreeDataProvider);
+
+  const openEditorsProvider = new OpenEditorsProvider();
+
+  disposable.push(
+    vscode.window.registerTreeDataProvider(
+      "managerOpenEditors",
+      openEditorsProvider
+    )
+  );
 
   disposable.push(
     vscode.window.registerTreeDataProvider(
