@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
-import { getPrefix } from '../util';
+import * as path from 'path';
+import { getPrefix, getPrefixChar } from '../util';
 
 export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
   private _onDidChangeTreeData: vscode.EventEmitter<vscode.TreeItem | undefined | null | void> = new vscode.EventEmitter<vscode.TreeItem | undefined | null | void>();
@@ -24,14 +25,27 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
     const editorItems = tabs.map((tab, index) => {
       const item = new vscode.TreeItem(tab.label);
       if (tab.input instanceof vscode.TabInputText) {
-        item.resourceUri = tab.input.uri;
+        const uri = tab.input.uri;
+        const fullPath = uri.fsPath;
+        const filename = path.basename(fullPath);
+        const dir = path.dirname(fullPath);
+
+        const maxPathLength = 40;
+        let truncatedDir = dir;
+        if (dir.length > maxPathLength) {
+            truncatedDir = '...' + dir.substring(dir.length - maxPathLength);
+        }
+
+        item.label = `${getPrefix(index)}${filename}`;
+        item.description = truncatedDir;
         item.command = {
-          command: 'vscode.open',
-          title: 'Open File',
-          arguments: [tab.input.uri],
+          command: `i-want-all.editors.openItem${getPrefixChar(index)}`,
+          title: `Open Editor ${getPrefixChar(index)}`,
         };
+        item.iconPath = vscode.ThemeIcon.File;
+      } else {
+        item.label = `${getPrefix(index)}${tab.label}`;
       }
-      item.label = `${getPrefix(index)}${item.label}`;
       return item;
     });
 
