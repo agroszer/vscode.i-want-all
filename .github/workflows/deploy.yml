@@ -37,7 +37,7 @@ jobs:
       - name: Package extension
         uses: lannonbr/vsce-action@master
         with:
-          args: "package -o manage-all.vsix"
+          args: "package -o i-want-all.vsix"
 
       - name: Create Release
         id: create_release
@@ -58,8 +58,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./manage-all.vsix
-          asset_name: manage-all.vsix
+          asset_path: ./i-want-all.vsix
+          asset_name: i-want-all.vsix
           asset_content_type: application/zip
 
       - name: Publish in marketplace
@@ -70,6 +70,6 @@ jobs:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
 
       - name: Publish in Open VSX Registry
-        run: npx ovsx publish manage-all.vsix -p $OVSX_TOKEN
+        run: npx ovsx publish i-want-all.vsix -p $OVSX_TOKEN
         env:
           OVSX_TOKEN: ${{ secrets.OVSX_TOKEN }}
