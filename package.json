@@ -429,11 +429,6 @@
             {
                 "title": "I want to see everything",
                 "properties": {
-                    "i-want-all.openEditors.showIcon": {
-                        "type": "boolean",
-                        "default": true,
-                        "description": "Show file icon in the Open Editors list."
-                    },
                     "i-want-all.avoidDuplicates": {
                         "type": "boolean",
                         "default": true,
