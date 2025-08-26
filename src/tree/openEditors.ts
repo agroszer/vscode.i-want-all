@@ -1,22 +1,28 @@
-import * as vscode from 'vscode';
-import * as path from 'path';
-import { getPrefix, getPrefixChar } from '../util';
+import * as vscode from "vscode";
+import * as path from "path";
+import { getPrefix, getPrefixChar } from "../util";
 
-export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
-  private _onDidChangeTreeData: vscode.EventEmitter<vscode.TreeItem | undefined | null | void> = new vscode.EventEmitter<vscode.TreeItem | undefined | null | void>();
-  readonly onDidChangeTreeData: vscode.Event<vscode.TreeItem | undefined | null | void> = this._onDidChangeTreeData.event;
+export class OpenEditorsProvider
+  implements vscode.TreeDataProvider<vscode.TreeItem>
+{
+  private _onDidChangeTreeData: vscode.EventEmitter<
+    vscode.TreeItem | undefined | null | void
+  > = new vscode.EventEmitter<vscode.TreeItem | undefined | null | void>();
+  readonly onDidChangeTreeData: vscode.Event<
+    vscode.TreeItem | undefined | null | void
+  > = this._onDidChangeTreeData.event;
 
   constructor() {
     vscode.window.tabGroups.onDidChangeTabs(() => {
       this._onDidChangeTreeData.fire();
     });
     vscode.workspace.onDidChangeConfiguration(e => {
-        if (
-            e.affectsConfiguration('i-want-all.openEditors.displayStyle') ||
-            e.affectsConfiguration('i-want-all.openEditors.compactPathLength')
-        ) {
-            this._onDidChangeTreeData.fire();
-        }
+      if (
+        e.affectsConfiguration("i-want-all.openEditors.displayStyle") ||
+        e.affectsConfiguration("i-want-all.openEditors.compactPathLength")
+      ) {
+        this._onDidChangeTreeData.fire();
+      }
     });
   }
 
@@ -29,9 +35,15 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
       return Promise.resolve([]);
     }
 
-    const config = vscode.workspace.getConfiguration('i-want-all');
-    const displayStyle = config.get<string>('openEditors.displayStyle', 'default');
-    const compactPathLength = config.get<number>('openEditors.compactPathLength', 40);
+    const config = vscode.workspace.getConfiguration("i-want-all");
+    const displayStyle = config.get<string>(
+      "openEditors.displayStyle",
+      "default"
+    );
+    const compactPathLength = config.get<number>(
+      "openEditors.compactPathLength",
+      40
+    );
 
     const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
     const editorItems = tabs.map((tab, index) => {
@@ -40,23 +52,24 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
         const uri = tab.input.uri;
         const fullPath = uri.fsPath;
 
-        if (displayStyle === 'compact') {
-            let truncatedPath = fullPath;
-            if (fullPath.length > compactPathLength) {
-                truncatedPath = '...' + fullPath.substring(fullPath.length - compactPathLength);
-            }
-            item.label = `${getPrefix(index)}${truncatedPath}`;
+        if (displayStyle === "compact") {
+          let truncatedPath = fullPath;
+          if (fullPath.length > compactPathLength) {
+            truncatedPath =
+              "..." + fullPath.substring(fullPath.length - compactPathLength);
+          }
+          item.label = `${getPrefix(index)}${truncatedPath}`;
         } else {
-            const filename = path.basename(fullPath);
-            const dir = path.dirname(fullPath);
-            const maxPathLength = 40;
-            let truncatedDir = dir;
-            if (dir.length > maxPathLength) {
-                truncatedDir = '...' + dir.substring(dir.length - maxPathLength);
-            }
-            item.label = `${getPrefix(index)}${filename}`;
-            item.description = truncatedDir;
-            item.resourceUri = uri;
+          const filename = path.basename(fullPath);
+          const dir = path.dirname(fullPath);
+          const maxPathLength = 40;
+          let truncatedDir = dir;
+          if (dir.length > maxPathLength) {
+            truncatedDir = "..." + dir.substring(dir.length - maxPathLength);
+          }
+          item.label = `${getPrefix(index)}${filename}`;
+          item.description = truncatedDir;
+          item.resourceUri = uri;
         }
 
         item.command = {

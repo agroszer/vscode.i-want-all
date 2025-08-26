@@ -32,9 +32,7 @@ export async function activateExtension() {
 
 export async function showSidebar() {
   try {
-    await vscode.commands.executeCommand(
-      "workbench.view.extension.i-want-all"
-    );
+    await vscode.commands.executeCommand("workbench.view.extension.i-want-all");
     // tslint:disable-next-line:no-empty
   } catch (error) {}
 }
