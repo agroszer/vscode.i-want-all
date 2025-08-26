@@ -429,6 +429,20 @@
             {
                 "title": "I want to see everything",
                 "properties": {
+                    "i-want-all.openEditors.displayStyle": {
+                        "type": "string",
+                        "enum": [
+                            "default",
+                            "compact"
+                        ],
+                        "default": "default",
+                        "description": "Controls the display style of the Open Editors list."
+                    },
+                    "i-want-all.openEditors.compactPathLength": {
+                        "type": "integer",
+                        "default": 40,
+                        "description": "The maximum number of characters to display for the path in compact mode."
+                    },
                     "i-want-all.avoidDuplicates": {
                         "type": "boolean",
                         "default": true,

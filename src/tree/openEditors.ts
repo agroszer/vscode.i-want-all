@@ -10,6 +10,14 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
     vscode.window.tabGroups.onDidChangeTabs(() => {
       this._onDidChangeTreeData.fire();
     });
+    vscode.workspace.onDidChangeConfiguration(e => {
+        if (
+            e.affectsConfiguration('i-want-all.openEditors.displayStyle') ||
+            e.affectsConfiguration('i-want-all.openEditors.compactPathLength')
+        ) {
+            this._onDidChangeTreeData.fire();
+        }
+    });
   }
 
   getTreeItem(element: vscode.TreeItem): vscode.TreeItem {
@@ -21,24 +29,36 @@ export class OpenEditorsProvider implements vscode.TreeDataProvider<vscode.TreeI
       return Promise.resolve([]);
     }
 
+    const config = vscode.workspace.getConfiguration('i-want-all');
+    const displayStyle = config.get<string>('openEditors.displayStyle', 'default');
+    const compactPathLength = config.get<number>('openEditors.compactPathLength', 40);
+
     const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
     const editorItems = tabs.map((tab, index) => {
       const item = new vscode.TreeItem(tab.label);
       if (tab.input instanceof vscode.TabInputText) {
         const uri = tab.input.uri;
         const fullPath = uri.fsPath;
-        const filename = path.basename(fullPath);
-        const dir = path.dirname(fullPath);
 
-        const maxPathLength = 40;
-        let truncatedDir = dir;
-        if (dir.length > maxPathLength) {
-            truncatedDir = '...' + dir.substring(dir.length - maxPathLength);
+        if (displayStyle === 'compact') {
+            let truncatedPath = fullPath;
+            if (fullPath.length > compactPathLength) {
+                truncatedPath = '...' + fullPath.substring(fullPath.length - compactPathLength);
+            }
+            item.label = `${getPrefix(index)}${truncatedPath}`;
+        } else {
+            const filename = path.basename(fullPath);
+            const dir = path.dirname(fullPath);
+            const maxPathLength = 40;
+            let truncatedDir = dir;
+            if (dir.length > maxPathLength) {
+                truncatedDir = '...' + dir.substring(dir.length - maxPathLength);
+            }
+            item.label = `${getPrefix(index)}${filename}`;
+            item.description = truncatedDir;
+            item.resourceUri = uri;
         }
 
-        item.label = `${getPrefix(index)}${filename}`;
-        item.description = truncatedDir;
-        item.resourceUri = uri;
         item.command = {
           command: `i-want-all.editors.openItem${getPrefixChar(index)}`,
           title: `Open Editor ${getPrefixChar(index)}`,
