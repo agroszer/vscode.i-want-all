@@ -9,7 +9,7 @@
         "ui"
     ],
     "engines": {
-        "vscode": "^1.65.0"
+        "vscode": "^1.75.0"
     },
     "bugs": {
         "url": "https://github.com/agroszer/vscode.i-want-all/issues"
@@ -43,6 +43,10 @@
         "views": {
             "i-want-all": [
                 {
+                    "id": "managerOpenEditors",
+                    "name": "Open Editors"
+                },
+                {
                     "id": "managerClipboardHistory",
                     "name": "Clipboard History",
                     "icon": "media/clipboard.png"
@@ -54,6 +58,146 @@
                 "command": "i-want-all.editor.copyToHistory",
                 "title": "Copy to Clipboard History",
                 "category": "I want to see everything"
+            },
+            {
+                "command": "i-want-all.editors.openItem1",
+                "title": "Open Editor 1"
+            },
+            {
+                "command": "i-want-all.editors.openItem2",
+                "title": "Open Editor 2"
+            },
+            {
+                "command": "i-want-all.editors.openItem3",
+                "title": "Open Editor 3"
+            },
+            {
+                "command": "i-want-all.editors.openItem4",
+                "title": "Open Editor 4"
+            },
+            {
+                "command": "i-want-all.editors.openItem5",
+                "title": "Open Editor 5"
+            },
+            {
+                "command": "i-want-all.editors.openItem6",
+                "title": "Open Editor 6"
+            },
+            {
+                "command": "i-want-all.editors.openItem7",
+                "title": "Open Editor 7"
+            },
+            {
+                "command": "i-want-all.editors.openItem8",
+                "title": "Open Editor 8"
+            },
+            {
+                "command": "i-want-all.editors.openItem9",
+                "title": "Open Editor 9"
+            },
+            {
+                "command": "i-want-all.editors.openItema",
+                "title": "Open Editor a"
+            },
+            {
+                "command": "i-want-all.editors.openItemb",
+                "title": "Open Editor b"
+            },
+            {
+                "command": "i-want-all.editors.openItemc",
+                "title": "Open Editor c"
+            },
+            {
+                "command": "i-want-all.editors.openItemd",
+                "title": "Open Editor d"
+            },
+            {
+                "command": "i-want-all.editors.openIteme",
+                "title": "Open Editor e"
+            },
+            {
+                "command": "i-want-all.editors.openItemf",
+                "title": "Open Editor f"
+            },
+            {
+                "command": "i-want-all.editors.openItemg",
+                "title": "Open Editor g"
+            },
+            {
+                "command": "i-want-all.editors.openItemh",
+                "title": "Open Editor h"
+            },
+            {
+                "command": "i-want-all.editors.openItemi",
+                "title": "Open Editor i"
+            },
+            {
+                "command": "i-want-all.editors.openItemj",
+                "title": "Open Editor j"
+            },
+            {
+                "command": "i-want-all.editors.openItemk",
+                "title": "Open Editor k"
+            },
+            {
+                "command": "i-want-all.editors.openIteml",
+                "title": "Open Editor l"
+            },
+            {
+                "command": "i-want-all.editors.openItemm",
+                "title": "Open Editor m"
+            },
+            {
+                "command": "i-want-all.editors.openItemn",
+                "title": "Open Editor n"
+            },
+            {
+                "command": "i-want-all.editors.openItemo",
+                "title": "Open Editor o"
+            },
+            {
+                "command": "i-want-all.editors.openItemp",
+                "title": "Open Editor p"
+            },
+            {
+                "command": "i-want-all.editors.openItemq",
+                "title": "Open Editor q"
+            },
+            {
+                "command": "i-want-all.editors.openItemr",
+                "title": "Open Editor r"
+            },
+            {
+                "command": "i-want-all.editors.openItems",
+                "title": "Open Editor s"
+            },
+            {
+                "command": "i-want-all.editors.openItemt",
+                "title": "Open Editor t"
+            },
+            {
+                "command": "i-want-all.editors.openItemu",
+                "title": "Open Editor u"
+            },
+            {
+                "command": "i-want-all.editors.openItemv",
+                "title": "Open Editor v"
+            },
+            {
+                "command": "i-want-all.editors.openItemw",
+                "title": "Open Editor w"
+            },
+            {
+                "command": "i-want-all.editors.openItemx",
+                "title": "Open Editor x"
+            },
+            {
+                "command": "i-want-all.editors.openItemy",
+                "title": "Open Editor y"
+            },
+            {
+                "command": "i-want-all.editors.openItemz",
+                "title": "Open Editor z"
             },
             {
                 "command": "i-want-all.editor.pasteItem1",
@@ -285,6 +429,20 @@
             {
                 "title": "I want to see everything",
                 "properties": {
+                    "i-want-all.openEditors.displayStyle": {
+                        "type": "string",
+                        "enum": [
+                            "default",
+                            "compact"
+                        ],
+                        "default": "default",
+                        "description": "Controls the display style of the Open Editors list."
+                    },
+                    "i-want-all.openEditors.compactPathLength": {
+                        "type": "integer",
+                        "default": 40,
+                        "description": "The maximum number of characters to display for the path in compact mode."
+                    },
                     "i-want-all.avoidDuplicates": {
                         "type": "boolean",
                         "default": true,
@@ -377,7 +535,7 @@
         "@types/mocha": "^10.0.1",
         "@types/node": "~18.15.3",
         "@types/sinon": "^10.0.13",
-        "@types/vscode": "1.65.0",
+        "@types/vscode": "1.75.0",
         "@typescript-eslint/eslint-plugin": "^5.55.0",
         "@typescript-eslint/parser": "^5.55.0",
         "@vscode/test-electron": "^2.3.0",

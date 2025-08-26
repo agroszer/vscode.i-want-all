@@ -12,6 +12,7 @@ import { ClipboardCompletion } from "./completion";
 import { ClipboardManager } from "./manager";
 import { Monitor } from "./monitor";
 import { ClipboardTreeDataProvider } from "./tree/history";
+import { OpenEditorsProvider } from "./tree/openEditors";
 import { CopyToHistoryCommand } from "./commads/copyToHistory";
 import { getPrefixChar } from "./util";
 
@@ -88,6 +89,15 @@ export async function activate(context: vscode.ExtensionContext) {
   const clipboardTreeDataProvider = new ClipboardTreeDataProvider(manager);
   disposable.push(clipboardTreeDataProvider);
 
+  const openEditorsProvider = new OpenEditorsProvider();
+
+  disposable.push(
+    vscode.window.registerTreeDataProvider(
+      "managerOpenEditors",
+      openEditorsProvider
+    )
+  );
+
   disposable.push(
     vscode.window.registerTreeDataProvider(
       "managerClipboardHistory",
@@ -127,6 +137,20 @@ export async function activate(context: vscode.ExtensionContext) {
     const cmd = `i-want-all.editor.pasteItem${prefix}`;
     commandIds.push(cmd);
     disposable.push(vscode.commands.registerCommand(cmd, pasteItemHandler(i)));
+  }
+
+  const openEditorHandler = (index: number) => async () => {
+    const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
+    const tab = tabs[index];
+    if (tab && tab.input instanceof vscode.TabInputText) {
+      await vscode.window.showTextDocument(tab.input.uri, { preview: false });
+    }
+  };
+
+  for (let i = 0; i < 35; i++) {
+    const prefix = getPrefixChar(i);
+    const cmd = `i-want-all.editors.openItem${prefix}`;
+    disposable.push(vscode.commands.registerCommand(cmd, openEditorHandler(i)));
   }
 
   context.subscriptions.push(...disposable);
