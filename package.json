@@ -3,7 +3,7 @@
     "name": "i-want-all",
     "displayName": "I want to see everything",
     "description": "I want to see everything",
-    "version": "1.5.0",
+    "version": "0.0.1",
     "icon": "media/clipboard.png",
     "extensionKind": [
         "ui"
