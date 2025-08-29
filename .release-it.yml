@@ -4,7 +4,7 @@ git:
   tagName: "v${version}"
 
 hooks:
-  after:bump: 
+  after:bump:
     - "npm run changelog:update"
     - "npm run organize"
 
