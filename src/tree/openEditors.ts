@@ -59,6 +59,7 @@ export class OpenEditorsProvider
               "..." + fullPath.substring(fullPath.length - compactPathLength);
           }
           item.label = `${getPrefix(index)}${truncatedPath}`;
+          item.resourceUri = uri;
         } else {
           const filename = path.basename(fullPath);
           const dir = path.dirname(fullPath);
