@@ -146,7 +146,7 @@ export class ClipboardManager implements vscode.Disposable {
 
     if (this.context.storagePath) {
       const parts = this.context.storagePath.split(
-        /[\\/]workspaceStorage[\\/]/
+        /[\\/]workspaceStorage[\\/]/ 
       );
       folder = parts[0];
     }

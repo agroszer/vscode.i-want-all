@@ -50,6 +50,10 @@
                     "id": "managerClipboardHistory",
                     "name": "Clipboard History",
                     "icon": "media/clipboard.png"
+                },
+                {
+                    "id": "i-want-all.completion",
+                    "name": "Completion"
                 }
             ]
         },
@@ -338,6 +342,181 @@
             {
                 "command": "i-want-all.editor.pasteItemz",
                 "title": "Paste Clipboard Item z"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItem1",
+                "title": "Insert Text Completion Item 1"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItem2",
+                "title": "Insert Text Completion Item 2"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItem3",
+                "title": "Insert Text Completion Item 3"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItem4",
+                "title": "Insert Text Completion Item 4"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItem5",
+                "title": "Insert Text Completion Item 5"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItem6",
+                "title": "Insert Text Completion Item 6"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItem7",
+                "title": "Insert Text Completion Item 7"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItem8",
+                "title": "Insert Text Completion Item 8"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItem9",
+                "title": "Insert Text Completion Item 9"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItema",
+                "title": "Insert Text Completion Item a"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemb",
+                "title": "Insert Text Completion Item b"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemc",
+                "title": "Insert Text Completion Item c"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemd",
+                "title": "Insert Text Completion Item d"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextIteme",
+                "title": "Insert Text Completion Item e"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemf",
+                "title": "Insert Text Completion Item f"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemg",
+                "title": "Insert Text Completion Item g"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemh",
+                "title": "Insert Text Completion Item h"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemi",
+                "title": "Insert Text Completion Item i"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemj",
+                "title": "Insert Text Completion Item j"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemk",
+                "title": "Insert Text Completion Item k"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextIteml",
+                "title": "Insert Text Completion Item l"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemm",
+                "title": "Insert Text Completion Item m"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemn",
+                "title": "Insert Text Completion Item n"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemo",
+                "title": "Insert Text Completion Item o"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemp",
+                "title": "Insert Text Completion Item p"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemq",
+                "title": "Insert Text Completion Item q"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemr",
+                "title": "Insert Text Completion Item r"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItems",
+                "title": "Insert Text Completion Item s"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemt",
+                "title": "Insert Text Completion Item t"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemu",
+                "title": "Insert Text Completion Item u"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemv",
+                "title": "Insert Text Completion Item v"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemw",
+                "title": "Insert Text Completion Item w"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemx",
+                "title": "Insert Text Completion Item x"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemy",
+                "title": "Insert Text Completion Item y"
+            }
+            ,
+            {
+                "command": "i-want-all.completion.insertTextItemz",
+                "title": "Insert Text Completion Item z"
             },
             {
                 "command": "i-want-all.editor.pickAndPaste",
@@ -505,6 +684,36 @@
                         "type": "string",
                         "default": "clip",
                         "description": "Default prefix for snippets completion (clip1, clip2, ...)"
+                    },
+                    "i-want-all.completionMinWordLength": {
+                        "type": "integer",
+                        "default": 3,
+                        "description": "Minimum word length to trigger completion"
+                    },
+                    "i-want-all.completionIgnoreCase": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Ignore case when searching for completions"
+                    },
+                    "i-want-all.completionItems": {
+                        "type": "integer",
+                        "default": 12,
+                        "description": "Maximum number of completion items to show"
+                    },
+                    "i-want-all.completionLookHistory": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Look into all open tabs for completions"
+                    },
+                    "i-want-all.completionSpeed": {
+                        "type": "integer",
+                        "default": 100,
+                        "description": "Time in milliseconds to check for completions"
+                    },
+                    "i-want-all.QWIN_FILESIZELIMIT": {
+                        "type": "integer",
+                        "default": 102400,
+                        "description": "Maximum file size to scan for completions"
                     }
                 }
             }
@@ -538,7 +747,7 @@
         "@types/vscode": "1.75.0",
         "@typescript-eslint/eslint-plugin": "^5.55.0",
         "@typescript-eslint/parser": "^5.55.0",
-        "@vscode/test-electron": "^2.3.0",
+        "@vscode/test-electron": "^2.5.2",
         "conventional-changelog-cli": "^2.2.2",
         "decache": "^4.6.1",
         "eslint": "^8.36.0",

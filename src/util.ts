@@ -32,3 +32,43 @@ export function getPrefix(index: number): string {
   const char = getPrefixChar(index);
   return char ? `${char}] ` : "";
 }
+
+import * as vscode from "vscode";
+
+const QWIN_SEPARATORS = ' ./:';
+
+export function getWordAtPosition(
+  document: vscode.TextDocument,
+  position: vscode.Position,
+  minWordLength: number
+): string | undefined {
+  const line = document.lineAt(position.line).text.substring(0, position.character);
+  const regex = `(\\w+[${QWIN_SEPARATORS}]?\\w{${minWordLength-1}})$`;
+  const wordMatch = line.match(new RegExp(regex));
+  return wordMatch ? wordMatch[1] : undefined;
+}
+
+export function replaceWordAtPosition(
+  editor: vscode.TextEditor,
+  position: vscode.Position,
+  newWord: string,
+  minWordLength: number
+) {
+  const currentWord = getWordAtPosition(editor.document, position, minWordLength);
+  let range: vscode.Range;
+
+  if (currentWord) {
+    const startPosition = position.translate(0, -currentWord.length);
+    range = new vscode.Range(startPosition, position);
+  } else {
+    // If no word is found, just insert at the current position
+    range = new vscode.Range(position, position);
+  }
+
+  editor.edit(editBuilder => {
+    // Erase the current word
+    editBuilder.delete(range);
+    // Then insert the new word at the start of the original range
+    editBuilder.insert(range.start, newWord);
+  });
+}

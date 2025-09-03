@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { ClipboardCompletion } from "../completion";
+import { TextCompletionManager } from "../textCompletion";
 import { ClipboardManager } from "../manager";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -9,6 +10,7 @@ const EXTENSION_ID = `${pkg.publisher}.${pkg.name}`;
 
 interface ExtensionAPI {
   completion: ClipboardCompletion;
+  textCompletionManager: TextCompletionManager;
   manager: ClipboardManager;
 }
 

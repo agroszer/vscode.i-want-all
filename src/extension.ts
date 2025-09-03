@@ -3,20 +3,27 @@ import * as vscode from "vscode";
 import { defaultClipboard } from "./clipboard";
 import { ApiGetMonitor } from "./commads/apiGetMonitor";
 import { ClearClipboardHistory } from "./commads/clearClipboardHistory";
+import { commandList } from "./commads/common";
+import { CopyToHistoryCommand } from "./commads/copyToHistory";
 import { HistoryTreeDoubleClickCommand } from "./commads/historyTreeDoubleClick";
+// import { insertTextCompletion } from "./commads/insertTextCompletion"; // REMOVED
 import { PickAndPasteCommand } from "./commads/pickAndPaste";
 import { RemoveClipboardHistory } from "./commads/removeClipboardHistory";
 import { SetClipboardValueCommand } from "./commads/setClipboardValue";
 import { ShowClipboardInFile } from "./commads/showClipboardInFile";
-import { ClipboardCompletion } from "./completion";
+import { TextCompletionDoubleClickCommand } from "./commads/textCompletionDoubleClick";
 import { ClipboardManager } from "./manager";
 import { Monitor } from "./monitor";
+import { TextCompletionManager } from "./textCompletion";
 import { ClipboardTreeDataProvider } from "./tree/history";
 import { OpenEditorsProvider } from "./tree/openEditors";
-import { CopyToHistoryCommand } from "./commads/copyToHistory";
+import { TextCompletionTreeDataProvider } from "./tree/textCompletion";
 import { getPrefixChar } from "./util";
 
+import { ClipboardCompletion } from "./completion";
+
 let manager: ClipboardManager;
+let textCompletionManager: TextCompletionManager;
 
 // this method is called when your extension is activated
 export async function activate(context: vscode.ExtensionContext) {
@@ -51,6 +58,9 @@ export async function activate(context: vscode.ExtensionContext) {
   manager = new ClipboardManager(context, monitor);
   disposable.push(manager);
 
+  textCompletionManager = new TextCompletionManager();
+  disposable.push(textCompletionManager);
+
   // API Commands
   disposable.push(new ApiGetMonitor(monitor));
 
@@ -62,6 +72,7 @@ export async function activate(context: vscode.ExtensionContext) {
   disposable.push(new ShowClipboardInFile(manager));
   disposable.push(new ClearClipboardHistory(manager));
   disposable.push(new CopyToHistoryCommand(monitor));
+  disposable.push(new TextCompletionDoubleClickCommand(textCompletionManager)); // MODIFIED
 
   const completion = new ClipboardCompletion(manager);
   // disposable.push(completion);
@@ -86,8 +97,19 @@ export async function activate(context: vscode.ExtensionContext) {
     )
   );
 
+  disposable.push(
+    vscode.commands.registerCommand(
+      commandList.insertTextCompletion,
+      textCompletionManager.insertTextCompletion.bind(textCompletionManager) // MODIFIED
+    )
+  );
+
   const clipboardTreeDataProvider = new ClipboardTreeDataProvider(manager);
   disposable.push(clipboardTreeDataProvider);
+
+  const textCompletionTreeDataProvider = new TextCompletionTreeDataProvider(
+    textCompletionManager
+  );
 
   const openEditorsProvider = new OpenEditorsProvider();
 
@@ -102,6 +124,13 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.window.registerTreeDataProvider(
       "managerClipboardHistory",
       clipboardTreeDataProvider
+    )
+  );
+
+  disposable.push(
+    vscode.window.registerTreeDataProvider(
+      "i-want-all.completion",
+      textCompletionTreeDataProvider
     )
   );
 
@@ -153,11 +182,25 @@ export async function activate(context: vscode.ExtensionContext) {
     disposable.push(vscode.commands.registerCommand(cmd, openEditorHandler(i)));
   }
 
+  const doubleClickCompletionItemHandler = (index: number) => async () => {
+    const item = textCompletionManager.completions[index];
+    if (!item) {
+      return;
+    }
+    await vscode.commands.executeCommand(commandList.textCompletionInsertText, item);
+  };
+
+  for (let i = 0; i < 35; i++) {
+    const prefix = getPrefixChar(i);
+    const cmd = `i-want-all.completion.insertTextItem${prefix}`;
+    disposable.push(vscode.commands.registerCommand(cmd, doubleClickCompletionItemHandler(i)));
+  }
+
   context.subscriptions.push(...disposable);
 
   return {
-    completion,
     manager,
+    textCompletionManager,
   };
 }
 

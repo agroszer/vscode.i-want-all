@@ -1,0 +1,119 @@
+import * as vscode from "vscode";
+import { getWordAtPosition, replaceWordAtPosition } from "./util"; // Import replaceWordAtPosition
+
+export interface ITextCompletionItem {
+  value: string;
+}
+
+export class TextCompletionManager implements vscode.Disposable {
+  private _disposables: vscode.Disposable[] = [];
+  private _completions: ITextCompletionItem[] = [];
+  private _onDidChangeCompletionList: vscode.EventEmitter<void> = new vscode.EventEmitter<void>();
+  public readonly onDidChangeCompletionList: vscode.Event<void> = this._onDidChangeCompletionList.event;
+  private _timer: NodeJS.Timeout | undefined;
+  private _lastActiveEditor: vscode.TextEditor | undefined;
+  private _lastActivePosition: vscode.Position | undefined;
+
+  constructor() {
+    // Update completions on cursor position change
+    vscode.window.onDidChangeTextEditorSelection(this.onDidChangeTextEditorSelection, this, this._disposables);
+  }
+
+  private onDidChangeTextEditorSelection(event: vscode.TextEditorSelectionChangeEvent) {
+    const editor = event.textEditor;
+    const position = event.selections[0]?.active; // Use optional chaining
+
+    // Check if the active editor or the cursor position has changed
+    if (editor !== this._lastActiveEditor || (position && this._lastActivePosition && !position.isEqual(this._lastActivePosition))) { // Ensure both position and _lastActivePosition are defined
+      if (this._timer) {
+        clearTimeout(this._timer);
+      }
+      this._timer = setTimeout(() => {
+        this.updateCompletions(event);
+        this._lastActiveEditor = editor; // Update last active editor
+        this._lastActivePosition = position; // Update last active position
+      }, this.getCompletionSpeed());
+    }
+  }
+
+  private async updateCompletions(event: vscode.TextEditorSelectionChangeEvent) {
+    const editor = event.textEditor;
+    if (!editor) {
+      return;
+    }
+
+    const position = event.selections[0].active;
+    const word = getWordAtPosition(editor.document, position, this.getCompletionMinWordLength());
+
+    if (!word) {
+      this._completions = [];
+      this._onDidChangeCompletionList.fire();
+      return;
+    }
+
+    this._completions = await this.getCompletions(word);
+    this._onDidChangeCompletionList.fire();
+  }
+
+  private async getCompletions(word: string): Promise<ITextCompletionItem[]> {
+    const config = vscode.workspace.getConfiguration("i-want-all");
+    const maxItems = config.get<number>("completionItems", 12);
+    const ignoreCase = config.get<boolean>("completionIgnoreCase", false);
+    const lookHistory = config.get<boolean>("completionLookHistory", false);
+    const fileSizeLimit = config.get<number>("QWIN_FILESIZELIMIT", 102400);
+
+    const documents = lookHistory ? vscode.workspace.textDocuments : [vscode.window.activeTextEditor?.document].filter(doc => doc !== undefined) as vscode.TextDocument[];
+
+    const words = new Set<string>();
+
+    const regex = new RegExp(`\\b${word}\\w*`, ignoreCase ? "gi" : "g");
+
+    for (const doc of documents) {
+      if (doc.getText().length > fileSizeLimit) {
+        continue;
+      }
+      const text = doc.getText();
+      let match;
+      while ((match = regex.exec(text)) !== null) {
+        if (match[0] !== word) {
+          words.add(match[0]);
+        }
+        if (words.size >= maxItems) {
+          break;
+        }
+      }
+      if (words.size >= maxItems) {
+        break;
+      }
+    }
+
+    return Array.from(words).map(value => ({ value }));
+  }
+
+  private getCompletionMinWordLength(): number {
+    return vscode.workspace.getConfiguration("i-want-all").get<number>("completionMinWordLength", 3);
+  }
+
+  private getCompletionSpeed(): number {
+    return vscode.workspace.getConfiguration("i-want-all").get<number>("completionSpeed", 100);
+  }
+
+  public get completions(): ITextCompletionItem[] {
+    return this._completions;
+  }
+
+  public insertTextCompletion(item: ITextCompletionItem) {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+        return;
+    }
+    replaceWordAtPosition(editor, editor.selection.active, item.value, this.getCompletionMinWordLength());
+  }
+
+  public dispose() {
+    if (this._timer) {
+      clearTimeout(this._timer);
+    }
+    this._disposables.forEach(d => d.dispose());
+  }
+}

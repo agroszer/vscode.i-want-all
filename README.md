@@ -75,3 +75,38 @@ Copy to history:
 
 Pick and Paste:
 ![I want to see everything - Pick and Paste](screenshots/pick-and-paste.gif)
+
+
+analyze qwin.js, 
+that is a komodo IDE addon 
+I want the same text completion feature as it has for the VScode extension, including all options.
+do not touch the other 2 trees and supporting code
+especially do not mix up this feature with the existing ClipboardCompletion
+where the options are:
+completionMinWordLength
+completionIgnoreCase
+QWIN_FILESIZELIMIT
+completionItems (max number of items)
+completionSpeed (obey when collecting items)
+completionLookHistory (look into all open tabs)
+add only a 3rd tree below managerClipboardHistory
+no need to add vscode.CompletionItemProvider for this
+that extension basically offers text (not just code) completion suggestions based on the current cursor position and current open tabs text
+try to obey last used order of open tabs
+update suggestions whenever cursor position changes
+watch out how qwin inserts/replaces text
+
+add last inserted completion to clipboard history
+
+dude, you missed half of the options, 
+
+I don't see where do you track the cursor changed positon ?event? 
+
+be careful with inseting the item, it's not just insert because the start is already there
+like following:
+typing (cursor is |):
+"inter|"
+items will be:
+1. "interfaces"
+2. "interactive"
+on insertion of (1) you want "interfaces|" not "interinterfaces|"
