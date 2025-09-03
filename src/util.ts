@@ -35,15 +35,17 @@ export function getPrefix(index: number): string {
 
 import * as vscode from "vscode";
 
-const QWIN_SEPARATORS = ' ./:';
+const QWIN_SEPARATORS = " ./:";
 
 export function getWordAtPosition(
   document: vscode.TextDocument,
   position: vscode.Position,
   minWordLength: number
 ): string | undefined {
-  const line = document.lineAt(position.line).text.substring(0, position.character);
-  const regex = `(\\w+[${QWIN_SEPARATORS}]?\\w{${minWordLength-1}})$`;
+  const line = document
+    .lineAt(position.line)
+    .text.substring(0, position.character);
+  const regex = `(\\w+[${QWIN_SEPARATORS}]?\\w{${minWordLength - 1}})$`;
   const wordMatch = line.match(new RegExp(regex));
   return wordMatch ? wordMatch[1] : undefined;
 }
@@ -54,7 +56,11 @@ export function replaceWordAtPosition(
   newWord: string,
   minWordLength: number
 ) {
-  const currentWord = getWordAtPosition(editor.document, position, minWordLength);
+  const currentWord = getWordAtPosition(
+    editor.document,
+    position,
+    minWordLength
+  );
   let range: vscode.Range;
 
   if (currentWord) {

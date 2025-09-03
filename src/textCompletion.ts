@@ -8,23 +8,37 @@ export interface ITextCompletionItem {
 export class TextCompletionManager implements vscode.Disposable {
   private _disposables: vscode.Disposable[] = [];
   private _completions: ITextCompletionItem[] = [];
-  private _onDidChangeCompletionList: vscode.EventEmitter<void> = new vscode.EventEmitter<void>();
-  public readonly onDidChangeCompletionList: vscode.Event<void> = this._onDidChangeCompletionList.event;
+  private _onDidChangeCompletionList: vscode.EventEmitter<void> =
+    new vscode.EventEmitter<void>();
+  public readonly onDidChangeCompletionList: vscode.Event<void> =
+    this._onDidChangeCompletionList.event;
   private _timer: NodeJS.Timeout | undefined;
   private _lastActiveEditor: vscode.TextEditor | undefined;
   private _lastActivePosition: vscode.Position | undefined;
 
   constructor() {
     // Update completions on cursor position change
-    vscode.window.onDidChangeTextEditorSelection(this.onDidChangeTextEditorSelection, this, this._disposables);
+    vscode.window.onDidChangeTextEditorSelection(
+      this.onDidChangeTextEditorSelection,
+      this,
+      this._disposables
+    );
   }
 
-  private onDidChangeTextEditorSelection(event: vscode.TextEditorSelectionChangeEvent) {
+  private onDidChangeTextEditorSelection(
+    event: vscode.TextEditorSelectionChangeEvent
+  ) {
     const editor = event.textEditor;
     const position = event.selections[0]?.active; // Use optional chaining
 
     // Check if the active editor or the cursor position has changed
-    if (editor !== this._lastActiveEditor || (position && this._lastActivePosition && !position.isEqual(this._lastActivePosition))) { // Ensure both position and _lastActivePosition are defined
+    if (
+      editor !== this._lastActiveEditor ||
+      (position &&
+        this._lastActivePosition &&
+        !position.isEqual(this._lastActivePosition))
+    ) {
+      // Ensure both position and _lastActivePosition are defined
       if (this._timer) {
         clearTimeout(this._timer);
       }
@@ -36,14 +50,20 @@ export class TextCompletionManager implements vscode.Disposable {
     }
   }
 
-  private async updateCompletions(event: vscode.TextEditorSelectionChangeEvent) {
+  private async updateCompletions(
+    event: vscode.TextEditorSelectionChangeEvent
+  ) {
     const editor = event.textEditor;
     if (!editor) {
       return;
     }
 
     const position = event.selections[0].active;
-    const word = getWordAtPosition(editor.document, position, this.getCompletionMinWordLength());
+    const word = getWordAtPosition(
+      editor.document,
+      position,
+      this.getCompletionMinWordLength()
+    );
 
     if (!word) {
       this._completions = [];
@@ -62,7 +82,11 @@ export class TextCompletionManager implements vscode.Disposable {
     const lookHistory = config.get<boolean>("completionLookHistory", false);
     const fileSizeLimit = config.get<number>("QWIN_FILESIZELIMIT", 102400);
 
-    const documents = lookHistory ? vscode.workspace.textDocuments : [vscode.window.activeTextEditor?.document].filter(doc => doc !== undefined) as vscode.TextDocument[];
+    const documents = lookHistory
+      ? vscode.workspace.textDocuments
+      : ([vscode.window.activeTextEditor?.document].filter(
+          doc => doc !== undefined
+        ) as vscode.TextDocument[]);
 
     const words = new Set<string>();
 
@@ -91,11 +115,15 @@ export class TextCompletionManager implements vscode.Disposable {
   }
 
   private getCompletionMinWordLength(): number {
-    return vscode.workspace.getConfiguration("i-want-all").get<number>("completionMinWordLength", 3);
+    return vscode.workspace
+      .getConfiguration("i-want-all")
+      .get<number>("completionMinWordLength", 3);
   }
 
   private getCompletionSpeed(): number {
-    return vscode.workspace.getConfiguration("i-want-all").get<number>("completionSpeed", 100);
+    return vscode.workspace
+      .getConfiguration("i-want-all")
+      .get<number>("completionSpeed", 100);
   }
 
   public get completions(): ITextCompletionItem[] {
@@ -105,9 +133,14 @@ export class TextCompletionManager implements vscode.Disposable {
   public insertTextCompletion(item: ITextCompletionItem) {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
-        return;
+      return;
     }
-    replaceWordAtPosition(editor, editor.selection.active, item.value, this.getCompletionMinWordLength());
+    replaceWordAtPosition(
+      editor,
+      editor.selection.active,
+      item.value,
+      this.getCompletionMinWordLength()
+    );
   }
 
   public dispose() {

@@ -187,13 +187,18 @@ export async function activate(context: vscode.ExtensionContext) {
     if (!item) {
       return;
     }
-    await vscode.commands.executeCommand(commandList.textCompletionInsertText, item);
+    await vscode.commands.executeCommand(
+      commandList.textCompletionInsertText,
+      item
+    );
   };
 
   for (let i = 0; i < 35; i++) {
     const prefix = getPrefixChar(i);
     const cmd = `i-want-all.completion.insertTextItem${prefix}`;
-    disposable.push(vscode.commands.registerCommand(cmd, doubleClickCompletionItemHandler(i)));
+    disposable.push(
+      vscode.commands.registerCommand(cmd, doubleClickCompletionItemHandler(i))
+    );
   }
 
   context.subscriptions.push(...disposable);
