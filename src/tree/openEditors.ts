@@ -16,6 +16,9 @@ export class OpenEditorsProvider
     vscode.window.tabGroups.onDidChangeTabs(() => {
       this._onDidChangeTreeData.fire();
     });
+    vscode.window.onDidChangeActiveTextEditor(() => {
+      this._onDidChangeTreeData.fire();
+    });
     vscode.workspace.onDidChangeConfiguration(e => {
       if (
         e.affectsConfiguration("i-want-all.openEditors.displayStyle") ||
@@ -45,6 +48,7 @@ export class OpenEditorsProvider
       40
     );
 
+    const activeEditorUri = vscode.window.activeTextEditor?.document.uri;
     const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
     const editorItems = tabs.map((tab, index) => {
       const item = new vscode.TreeItem(tab.label);
@@ -71,6 +75,16 @@ export class OpenEditorsProvider
           item.label = `${getPrefix(index)}${filename}`;
           item.description = truncatedDir;
           item.resourceUri = uri;
+        }
+
+        if (activeEditorUri && uri.fsPath === activeEditorUri.fsPath) {
+            if (typeof item.label === "string") {
+                const label = item.label
+                item.label = {
+                    label,
+                    highlights: [[0, label.length]],
+                };
+            }
         }
 
         item.command = {
