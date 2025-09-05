@@ -4,7 +4,7 @@
     "displayName": "I want to see everything",
     "description": "I want to see everything",
     "version": "0.0.3",
-    "icon": "media/clipboard.png",
+    "icon": "media/eye.png",
     "extensionKind": [
         "ui"
     ],
