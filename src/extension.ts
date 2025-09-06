@@ -115,14 +115,14 @@ export async function activate(context: vscode.ExtensionContext) {
 
   disposable.push(
     vscode.window.registerTreeDataProvider(
-      "managerOpenEditors",
+      "i-want-all.openEditors",
       openEditorsProvider
     )
   );
 
   disposable.push(
     vscode.window.registerTreeDataProvider(
-      "managerClipboardHistory",
+      "i-want-all.clipboardHistory",
       clipboardTreeDataProvider
     )
   );

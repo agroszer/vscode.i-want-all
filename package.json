@@ -43,11 +43,11 @@
         "views": {
             "i-want-all": [
                 {
-                    "id": "managerOpenEditors",
+                    "id": "i-want-all.openEditors",
                     "name": "Open Editors"
                 },
                 {
-                    "id": "managerClipboardHistory",
+                    "id": "i-want-all.clipboardHistory",
                     "name": "Clipboard History",
                     "icon": "media/clipboard.png"
                 },
@@ -550,7 +550,7 @@
             "view/title": [
                 {
                     "command": "i-want-all.history.clear",
-                    "when": "view == managerClipboardHistory",
+                    "when": "view == i-want-all.clipboardHistory",
                     "group": "navigation"
                 }
             ]
