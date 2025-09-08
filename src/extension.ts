@@ -1,26 +1,25 @@
-"use strict";
-import * as vscode from "vscode";
-import { defaultClipboard } from "./clipboard";
-import { ApiGetMonitor } from "./commads/apiGetMonitor";
-import { ClearClipboardHistory } from "./commads/clearClipboardHistory";
-import { commandList } from "./commads/common";
-import { CopyToHistoryCommand } from "./commads/copyToHistory";
-import { HistoryTreeDoubleClickCommand } from "./commads/historyTreeDoubleClick";
-// import { insertTextCompletion } from "./commads/insertTextCompletion"; // REMOVED
-import { PickAndPasteCommand } from "./commads/pickAndPaste";
-import { RemoveClipboardHistory } from "./commads/removeClipboardHistory";
-import { SetClipboardValueCommand } from "./commads/setClipboardValue";
-import { ShowClipboardInFile } from "./commads/showClipboardInFile";
-import { TextCompletionDoubleClickCommand } from "./commads/textCompletionDoubleClick";
-import { ClipboardManager } from "./manager";
-import { Monitor } from "./monitor";
-import { TextCompletionManager } from "./textCompletion";
-import { ClipboardTreeDataProvider } from "./tree/history";
-import { OpenEditorsProvider } from "./tree/openEditors";
-import { TextCompletionTreeDataProvider } from "./tree/textCompletion";
-import { getPrefixChar } from "./util";
+'use strict';
+import * as vscode from 'vscode';
+import { defaultClipboard } from './clipboard';
+import { ApiGetMonitor } from './commads/apiGetMonitor';
+import { ClearClipboardHistory } from './commads/clearClipboardHistory';
+import { commandList } from './commads/common';
+import { CopyToHistoryCommand } from './commads/copyToHistory';
+import { HistoryTreeDoubleClickCommand } from './commads/historyTreeDoubleClick';
+// import { insertTextCompletion } from './commads/insertTextCompletion'; // REMOVED
+import { PickAndPasteCommand } from './commads/pickAndPaste';
+import { RemoveClipboardHistory } from './commads/removeClipboardHistory';
+import { SetClipboardValueCommand } from './commads/setClipboardValue';
+import { ShowClipboardInFile } from './commads/showClipboardInFile';
+import { ClipboardManager } from './manager';
+import { Monitor } from './monitor';
+import { TextCompletionManager } from './textCompletion';
+import { ClipboardTreeDataProvider } from './tree/history';
+import { OpenEditorsProvider } from './tree/openEditors';
+import { TextCompletionTreeDataProvider } from './tree/textCompletion';
+import { getPrefixChar } from './util';
 
-import { ClipboardCompletion } from "./completion";
+import { ClipboardCompletion } from './completion';
 
 let manager: ClipboardManager;
 let textCompletionManager: TextCompletionManager;
@@ -40,7 +39,7 @@ export async function activate(context: vscode.ExtensionContext) {
         vscode.window.showErrorMessage(error.message);
       } else {
         vscode.window.showErrorMessage(
-          "Failed to read value from clipboard, check the console log"
+          'Failed to read value from clipboard, check the console log'
         );
       }
     }, 2000);
@@ -72,7 +71,6 @@ export async function activate(context: vscode.ExtensionContext) {
   disposable.push(new ShowClipboardInFile(manager));
   disposable.push(new ClearClipboardHistory(manager));
   disposable.push(new CopyToHistoryCommand(monitor));
-  disposable.push(new TextCompletionDoubleClickCommand(textCompletionManager)); // MODIFIED
 
   const completion = new ClipboardCompletion(manager);
   // disposable.push(completion);
@@ -81,7 +79,7 @@ export async function activate(context: vscode.ExtensionContext) {
   disposable.push(
     vscode.languages.registerCompletionItemProvider(
       {
-        scheme: "file",
+        scheme: 'file',
       },
       completion
     )
@@ -91,16 +89,9 @@ export async function activate(context: vscode.ExtensionContext) {
   disposable.push(
     vscode.languages.registerCompletionItemProvider(
       {
-        scheme: "untitled",
+        scheme: 'untitled',
       },
       completion
-    )
-  );
-
-  disposable.push(
-    vscode.commands.registerCommand(
-      commandList.insertTextCompletion,
-      textCompletionManager.insertTextCompletion.bind(textCompletionManager) // MODIFIED
     )
   );
 
@@ -115,36 +106,36 @@ export async function activate(context: vscode.ExtensionContext) {
 
   disposable.push(
     vscode.window.registerTreeDataProvider(
-      "i-want-all.openEditors",
+      'i-want-all.openEditors',
       openEditorsProvider
     )
   );
 
   disposable.push(
     vscode.window.registerTreeDataProvider(
-      "i-want-all.clipboardHistory",
+      'i-want-all.clipboardHistory',
       clipboardTreeDataProvider
     )
   );
 
   disposable.push(
     vscode.window.registerTreeDataProvider(
-      "i-want-all.completion",
+      'i-want-all.completion',
       textCompletionTreeDataProvider
     )
   );
 
   const updateConfig = () => {
-    const config = vscode.workspace.getConfiguration("i-want-all");
-    monitor.checkInterval = config.get("checkInterval", 500);
-    monitor.onlyWindowFocused = config.get("onlyWindowFocused", true);
-    monitor.maxClipboardSize = config.get("maxClipboardSize", 1000000);
+    const config = vscode.workspace.getConfiguration('i-want-all');
+    monitor.checkInterval = config.get('checkInterval', 500);
+    monitor.onlyWindowFocused = config.get('onlyWindowFocused', true);
+    monitor.maxClipboardSize = config.get('maxClipboardSize', 1000000);
   };
   updateConfig();
 
   disposable.push(
     vscode.workspace.onDidChangeConfiguration(
-      e => e.affectsConfiguration("i-want-all") && updateConfig()
+      e => e.affectsConfiguration('i-want-all') && updateConfig()
     )
   );
 
@@ -184,14 +175,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
   const completionItemHandler = (index: number) => async () => {
     const item = textCompletionManager.completions[index];
-    console.log("completionItemHandler", index, item);
-    if (!item) {
-      return;
-    }
-    await vscode.commands.executeCommand(
-      commandList.textCompletionInsertText,
-      item
-    );
+    // console.log('completionItemHandler', index, item);
+    await textCompletionManager.insertTextCompletion(item);
   };
 
   for (let i = 0; i < 35; i++) {

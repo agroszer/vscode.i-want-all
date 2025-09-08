@@ -1,18 +1,19 @@
 import * as vscode from "vscode";
 import { commandList } from "../commads/common";
 import { TextCompletionManager, ITextCompletionItem } from "../textCompletion";
-import { getPrefix } from "../util";
+import { getPrefix, getPrefixChar } from "../util";
 
 export class TextCompletionItem extends vscode.TreeItem {
-  constructor(readonly item: ITextCompletionItem) {
+  constructor(readonly item: ITextCompletionItem, readonly index: number) {
     super(item.value);
 
     this.contextValue = "textCompletionItem:";
     this.label = this.item.value.replace(/\s+/g, " ").trim();
     this.tooltip = this.item.value;
+    const prefix = getPrefixChar(this.index);
 
     this.command = {
-      command: commandList.textCompletionInsertText,
+      command: `i-want-all.completion.insertTextItem${prefix}`,
       title: "Insert",
       tooltip: "Insert",
       arguments: [this.item],
@@ -48,7 +49,7 @@ export class TextCompletionTreeDataProvider
     const items = this._manager.completions;
 
     const childs = items.map((c, index) => {
-      const item = new TextCompletionItem(c);
+      const item = new TextCompletionItem(c, index);
       const prefix = getPrefix(index);
 
       item.label = prefix ? `${prefix}${item.label}` : item.label;
