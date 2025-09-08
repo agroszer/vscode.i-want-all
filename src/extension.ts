@@ -182,8 +182,9 @@ export async function activate(context: vscode.ExtensionContext) {
     disposable.push(vscode.commands.registerCommand(cmd, openEditorHandler(i)));
   }
 
-  const doubleClickCompletionItemHandler = (index: number) => async () => {
+  const completionItemHandler = (index: number) => async () => {
     const item = textCompletionManager.completions[index];
+    console.log("completionItemHandler", index, item);
     if (!item) {
       return;
     }
@@ -197,7 +198,7 @@ export async function activate(context: vscode.ExtensionContext) {
     const prefix = getPrefixChar(i);
     const cmd = `i-want-all.completion.insertTextItem${prefix}`;
     disposable.push(
-      vscode.commands.registerCommand(cmd, doubleClickCompletionItemHandler(i))
+      vscode.commands.registerCommand(cmd, completionItemHandler(i))
     );
   }
 

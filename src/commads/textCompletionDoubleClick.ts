@@ -28,6 +28,8 @@ export class TextCompletionDoubleClickCommand implements vscode.Disposable {
    * @param item
    */
   protected async execute(item: ITextCompletionItem) {
+    console.log("TextCompletionDoubleClickCommand", item);
+
     const now = Date.now();
     if (this.prevItem !== item) {
       this.prevItem = item;

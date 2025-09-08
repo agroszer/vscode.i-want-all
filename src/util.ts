@@ -56,7 +56,7 @@ export function replaceWordAtPosition(
   newWord: string,
   minWordLength: number
 ) {
-  console.log("replaceWordAtPosition", position, newWord, minWordLength);
+  // console.log("replaceWordAtPosition", position, newWord, minWordLength);
 
   const currentWord = getWordAtPosition(
     editor.document,
@@ -65,7 +65,7 @@ export function replaceWordAtPosition(
   );
   let range: vscode.Range;
 
-  console.log("replaceWordAtPosition", currentWord);
+  // console.log("replaceWordAtPosition", currentWord);
 
   if (currentWord) {
     const startPosition = position.translate(0, -currentWord.length);
@@ -75,7 +75,7 @@ export function replaceWordAtPosition(
     range = new vscode.Range(position, position);
   }
 
-  console.log("replaceWordAtPosition", range);
+  // console.log("replaceWordAtPosition", range);
 
   editor.edit(editBuilder => {
     // Erase the current word
