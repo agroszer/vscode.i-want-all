@@ -3,7 +3,7 @@
     "name": "i-want-all",
     "displayName": "I want to see everything",
     "description": "I want to see everything",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "icon": "media/eye.png",
     "extensionKind": [
         "ui"
