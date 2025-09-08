@@ -56,31 +56,21 @@ export function replaceWordAtPosition(
   newWord: string,
   minWordLength: number
 ) {
-  // console.log("replaceWordAtPosition", position, newWord, minWordLength);
-
   const currentWord = getWordAtPosition(
     editor.document,
     position,
     minWordLength
   );
+
   let range: vscode.Range;
-
-  // console.log("replaceWordAtPosition", currentWord);
-
   if (currentWord) {
     const startPosition = position.translate(0, -currentWord.length);
     range = new vscode.Range(startPosition, position);
   } else {
-    // If no word is found, just insert at the current position
     range = new vscode.Range(position, position);
   }
 
-  // console.log("replaceWordAtPosition", range);
-
   editor.edit(editBuilder => {
-    // Erase the current word
-    editBuilder.delete(range);
-    // Then insert the new word at the start of the original range
-    editBuilder.insert(range.start, newWord);
+    editBuilder.replace(range, newWord);
   });
 }
