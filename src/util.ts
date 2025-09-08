@@ -30,7 +30,7 @@ export function getPrefixChar(index: number): string {
 
 export function getPrefix(index: number): string {
   const char = getPrefixChar(index);
-  return char ? `${char}] ` : "";
+  return char ? `${char}| ` : "";
 }
 
 import * as vscode from "vscode";
