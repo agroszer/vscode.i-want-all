@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { TextCompletionManager, ITextCompletionItem } from "../textCompletion";
-import { getPrefix, getPrefixChar } from "../util";
+import { getPrefixChar } from "../util";
 
 export class TextCompletionItem extends vscode.TreeItem {
   constructor(readonly item: ITextCompletionItem, readonly index: number) {
@@ -9,7 +9,12 @@ export class TextCompletionItem extends vscode.TreeItem {
     this.contextValue = "textCompletionItem:";
     this.label = this.item.value.replace(/\s+/g, " ").trim();
     this.tooltip = this.item.value;
-    const prefix = getPrefixChar(this.index);
+    let prefix: string;
+    if (item.index !== null) {
+      prefix = getPrefixChar(item.index);
+    } else {
+      prefix = "Last";
+    }
 
     this.command = {
       command: `i-want-all.completion.insertTextItem${prefix}`,
@@ -45,14 +50,10 @@ export class TextCompletionTreeDataProvider
   public getChildren(
     _element?: TextCompletionItem | undefined
   ): vscode.ProviderResult<TextCompletionItem[]> {
-    const items = this._manager.completions;
+    const items = this._manager.completions(true, true);
 
     const childs = items.map((c, index) => {
       const item = new TextCompletionItem(c, index);
-      const prefix = getPrefix(index);
-
-      item.label = prefix ? `${prefix}${item.label}` : item.label;
-
       return item;
     });
 

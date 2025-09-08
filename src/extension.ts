@@ -173,7 +173,7 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   const completionItemHandler = (index: number) => async () => {
-    const item = textCompletionManager.completions[index];
+    const item = textCompletionManager.completions(false, false)[index];
     // console.log('completionItemHandler', index, item);
     await textCompletionManager.insertTextCompletion(item);
   };
@@ -185,6 +185,15 @@ export async function activate(context: vscode.ExtensionContext) {
       vscode.commands.registerCommand(cmd, completionItemHandler(i))
     );
   }
+
+  disposable.push(
+    vscode.commands.registerCommand(
+      "i-want-all.completion.insertTextItemLast",
+      async () => {
+        await textCompletionManager.insertLastCompletionItem();
+      }
+    )
+  );
 
   context.subscriptions.push(...disposable);
 

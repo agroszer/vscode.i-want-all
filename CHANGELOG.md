@@ -2,6 +2,9 @@
 > The extension has been renamed to **i-want-all**.
 
 # [1.5.0](https://github.com/agroszer/vscode.i-want-all/compare/v1.4.2...v1.5.0) (2023-03-17)
+### Features
+
+- Remember the last inserted completion item's text.
 
 ### Bug Fixes
 

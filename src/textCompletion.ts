@@ -1,10 +1,14 @@
 import * as vscode from "vscode";
-import { getWordAtPosition, replaceWordAtPosition } from "./util"; // Import replaceWordAtPosition
+import { getWordAtPosition, replaceWordAtPosition, getPrefix } from "./util"; // Import replaceWordAtPosition
 
 export interface ITextCompletionItem {
   value: string;
+  index: number | null;
 }
 
+export const completionState = {
+  lastCompletionItem: null as ITextCompletionItem | null,
+};
 export class TextCompletionManager implements vscode.Disposable {
   private _disposables: vscode.Disposable[] = [];
   private _completions: ITextCompletionItem[] = [];
@@ -111,7 +115,7 @@ export class TextCompletionManager implements vscode.Disposable {
       }
     }
 
-    return Array.from(words).map(value => ({ value }));
+    return Array.from(words).map((value, index) => ({ value, index }));
   }
 
   private getCompletionMinWordLength(): number {
@@ -126,8 +130,29 @@ export class TextCompletionManager implements vscode.Disposable {
       .get<number>("completionSpeed", 100);
   }
 
-  public get completions(): ITextCompletionItem[] {
-    return this._completions;
+  public completions(
+    withLast: boolean,
+    prefixed: boolean
+  ): ITextCompletionItem[] {
+    let items = this._completions.map(item => ({ ...item }));
+
+    if (prefixed) {
+      items = items.map((item, index) => {
+        const prefixedValue = getPrefix(index)
+          ? `${getPrefix(index)}${item.value}`
+          : item.value;
+        return { value: prefixedValue, index: index };
+      });
+    }
+
+    if (withLast && completionState.lastCompletionItem) {
+      items.unshift({
+        value: `last| ${completionState.lastCompletionItem.value}`,
+        index: null,
+      });
+    }
+
+    return items;
   }
 
   public insertTextCompletion(item: ITextCompletionItem) {
@@ -135,12 +160,19 @@ export class TextCompletionManager implements vscode.Disposable {
     if (!editor) {
       return;
     }
+    completionState.lastCompletionItem = item;
     replaceWordAtPosition(
       editor,
       editor.selection.active,
       item.value,
       this.getCompletionMinWordLength()
     );
+  }
+
+  public async insertLastCompletionItem() {
+    if (completionState.lastCompletionItem) {
+      await this.insertTextCompletion(completionState.lastCompletionItem);
+    }
   }
 
   public dispose() {

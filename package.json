@@ -484,6 +484,10 @@
                 "title": "Insert Text Completion Item z"
             },
             {
+                "command": "i-want-all.completion.insertTextItemLast",
+                "title": "Insert the last inserted text"
+            },
+            {
                 "command": "i-want-all.editor.pickAndPaste",
                 "title": "Pick and Paste",
                 "category": "I want to see everything"
