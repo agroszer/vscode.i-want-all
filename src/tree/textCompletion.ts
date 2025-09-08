@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import { commandList } from "../commads/common";
 import { TextCompletionManager, ITextCompletionItem } from "../textCompletion";
 import { getPrefix, getPrefixChar } from "../util";
 

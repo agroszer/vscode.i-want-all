@@ -691,6 +691,7 @@
         "clean": "rimraf ./out ./coverage ./test-reports",
         "compile": "tsc -p ./",
         "lint": "eslint -c .eslintrc.js --ext .ts src",
+        "prettier": "npm run lint -- --fix",
         "organize": "node ./out/tools/organize.js",
         "release": "release-it",
         "test": "npm run compile && node ./out/test/runTests.js",
