@@ -48,7 +48,7 @@ export class OpenEditorsProvider
       40
     );
 
-    const activeEditorUri = vscode.window.activeTextEditor?.document.uri;
+    const activeTab = vscode.window.tabGroups.activeTabGroup.activeTab;
     const tabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
     const editorItems = tabs.map((tab, index) => {
       const item = new vscode.TreeItem(tab.label);
@@ -77,22 +77,18 @@ export class OpenEditorsProvider
           item.resourceUri = uri;
         }
 
-        if (activeEditorUri && uri.fsPath === activeEditorUri.fsPath) {
-            if (typeof item.label === "string") {
-                const label = item.label
-                item.label = {
-                    label,
-                    highlights: [[0, label.length]],
-                };
-            }
-        }
-
         item.command = {
           command: `i-want-all.editors.openItem${getPrefixChar(index)}`,
           title: `Open Editor ${getPrefixChar(index)}`,
         };
       } else {
         item.label = `${getPrefix(index)}${tab.label}`;
+      }
+      if (tab === activeTab) {
+        if (typeof item.label === "string") {
+          const label = item.label;
+          item.label = { label, highlights: [[0, label.length]] };
+        }
       }
       return item;
     });
