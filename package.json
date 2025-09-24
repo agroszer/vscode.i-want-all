@@ -31,20 +31,11 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "i-want-all",
-                    "title": "I want to see everything",
-                    "icon": "media/eye.svg"
-                }
-            ]
-        },
         "views": {
-            "i-want-all": [
+            "explorer": [
                 {
                     "id": "i-want-all.openEditors",
-                    "name": "Open Editors"
+                    "name": "My Open Editors"
                 },
                 {
                     "id": "i-want-all.clipboardHistory",
