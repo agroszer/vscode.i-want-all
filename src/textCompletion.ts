@@ -75,11 +75,14 @@ export class TextCompletionManager implements vscode.Disposable {
       return;
     }
 
-    this._completions = await this.getCompletions(word);
+    this._completions = await this.getCompletions(word, position);
     this._onDidChangeCompletionList.fire();
   }
 
-  private async getCompletions(word: string): Promise<ITextCompletionItem[]> {
+  private async getCompletions(
+    word: string,
+    position: vscode.Position
+  ): Promise<ITextCompletionItem[]> {
     const config = vscode.workspace.getConfiguration("i-want-all");
     const maxItems = config.get<number>("completionItems", 12);
     const ignoreCase = config.get<boolean>("completionIgnoreCase", false);
@@ -88,31 +91,47 @@ export class TextCompletionManager implements vscode.Disposable {
 
     const documents = lookHistory
       ? vscode.workspace.textDocuments
-      : ([vscode.window.activeTextEditor?.document].filter(
-          doc => doc !== undefined
-        ) as vscode.TextDocument[]);
-
-    const words = new Set<string>();
+      : [vscode.window.activeTextEditor?.document].filter(
+          (doc): doc is vscode.TextDocument => doc !== undefined
+        );
 
     const regex = new RegExp(`\\b${word}\\w*`, ignoreCase ? "gi" : "g");
 
+    const activeEditor = vscode.window.activeTextEditor;
+    const cursorOffset = activeEditor
+      ? activeEditor.document.offsetAt(position)
+      : -1;
+
+    const allMatches: { word: string; distance: number }[] = [];
+
     for (const doc of documents) {
-      if (doc.getText().length > fileSizeLimit) {
+      if (doc.uri.scheme !== "file" && doc.uri.scheme !== "untitled") {
         continue;
       }
       const text = doc.getText();
+      if (text.length > fileSizeLimit) {
+        continue;
+      }
       let match;
       while ((match = regex.exec(text)) !== null) {
         if (match[0] !== word) {
-          words.add(match[0]);
-        }
-        if (words.size >= maxItems) {
-          break;
+          const distance =
+            doc === activeEditor?.document && cursorOffset !== -1
+              ? Math.abs(match.index - cursorOffset)
+              : Infinity;
+          allMatches.push({ word: match[0], distance });
         }
       }
+    }
+
+    allMatches.sort((a, b) => a.distance - b.distance);
+
+    const words = new Set<string>();
+    for (const match of allMatches) {
       if (words.size >= maxItems) {
         break;
       }
+      words.add(match.word);
     }
 
     return Array.from(words).map((value, index) => ({ value, index }));
