@@ -32,6 +32,7 @@ export class TextCompletionManager implements vscode.Disposable {
   private onDidChangeTextEditorSelection(
     event: vscode.TextEditorSelectionChangeEvent
   ) {
+    console.log("onDidChangeTextEditorSelection triggered");
     const editor = event.textEditor;
     const position = event.selections[0]?.active; // Use optional chaining
 
@@ -68,6 +69,7 @@ export class TextCompletionManager implements vscode.Disposable {
       position,
       this.getCompletionMinWordLength()
     );
+    console.log("updateCompletions called with word:", word);
 
     if (!word) {
       this._completions = [];
@@ -134,6 +136,7 @@ export class TextCompletionManager implements vscode.Disposable {
       words.add(match.word);
     }
 
+    console.log("getCompletions found:", Array.from(words));
     return Array.from(words).map((value, index) => ({ value, index }));
   }
 
