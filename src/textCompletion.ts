@@ -93,7 +93,7 @@ export class TextCompletionManager implements vscode.Disposable {
     const maxItems = config.get<number>("completionItems", 12);
     const ignoreCase = config.get<boolean>("completionIgnoreCase", false);
     const lookHistory = config.get<boolean>("completionLookHistory", false);
-    const fileSizeLimit = config.get<number>("QWIN_FILESIZELIMIT", 102400);
+    const fileSizeLimit = config.get<number>("fileSizeLimit", 102400);
     // console.log("Configuration:", {
     //   maxItems,
     //   ignoreCase,

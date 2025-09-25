@@ -575,47 +575,47 @@
                             "compact"
                         ],
                         "default": "default",
-                        "description": "Controls the display style of the Open Editors list."
+                        "description": "My Open Editors: Controls the display style of the list."
                     },
                     "i-want-all.openEditors.compactPathLength": {
                         "type": "integer",
                         "default": 40,
-                        "description": "The maximum number of characters to display for the path in compact mode."
+                        "description": "My Open Editors: The maximum number of characters to display for the path in compact mode."
                     },
                     "i-want-all.avoidDuplicates": {
                         "type": "boolean",
                         "default": true,
-                        "description": "Avoid duplicate clips in the list"
+                        "description": "Clipboard history: Avoid duplicate clips in the list"
                     },
                     "i-want-all.checkInterval": {
                         "type": "integer",
                         "default": 500,
-                        "description": "Time in milliseconds to check changes in clipboard. Set zero to disable."
+                        "description": "Clipboard history: Time in milliseconds to check changes in clipboard. Set zero to disable."
                     },
                     "i-want-all.maxClipboardSize": {
                         "type": "integer",
                         "default": 1000000,
-                        "description": "Maximum clipboard size in bytes."
+                        "description": "Clipboard history: Maximum clipboard size in bytes."
                     },
                     "i-want-all.maxClips": {
                         "type": "integer",
                         "default": 100,
-                        "description": "Maximum number of clips to save in clipboard"
+                        "description": "Clipboard history: Maximum number of clips to save in clipboard"
                     },
                     "i-want-all.moveToTop": {
                         "type": "boolean",
                         "default": true,
-                        "description": "Move used clip to top in the list"
+                        "description": "Clipboard history: Move used clip to top in the list"
                     },
                     "i-want-all.onlyWindowFocused": {
                         "type": "boolean",
                         "default": true,
-                        "description": "Get clips only from VSCode"
+                        "description": "Clipboard history: Get clips only from VSCode"
                     },
                     "i-want-all.preview": {
                         "type": "boolean",
                         "default": true,
-                        "description": "View a preview while you are choosing the clip"
+                        "description": "Clipboard history: View a preview while you are choosing the clip"
                     },
                     "i-want-all.saveTo": {
                         "type": [
@@ -624,56 +624,56 @@
                             "boolean"
                         ],
                         "default": null,
-                        "description": "Set location to save the clipboard file, set false to disable",
+                        "description": "Clipboard history: Set location to save the clipboard file, set false to disable",
                         "scope": "application"
                     },
                     "i-want-all.snippet.enabled": {
                         "scope": "resource",
                         "type": "boolean",
                         "default": true,
-                        "description": "Enable completion snippets"
+                        "description": "Clipboard history: Enable vscode completion snippets"
                     },
                     "i-want-all.snippet.max": {
                         "scope": "resource",
                         "type": "integer",
                         "default": 10,
-                        "description": "Maximum number of clips to suggests in snippets (Zero for all)"
+                        "description": "Clipboard history: Maximum number of clips to suggests in snippets (Zero for all)"
                     },
                     "i-want-all.snippet.prefix": {
                         "scope": "resource",
                         "type": "string",
                         "default": "clip",
-                        "description": "Default prefix for snippets completion (clip1, clip2, ...)"
+                        "description": "Clipboard history: Default prefix for snippets completion (clip1, clip2, ...)"
                     },
                     "i-want-all.completionMinWordLength": {
                         "type": "integer",
                         "default": 3,
-                        "description": "Minimum word length to trigger completion"
+                        "description": "Text Completion: Minimum word length to trigger completion"
                     },
                     "i-want-all.completionIgnoreCase": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Ignore case when searching for completions"
+                        "description": "Text Completion: Ignore case when searching for completions"
                     },
                     "i-want-all.completionItems": {
                         "type": "integer",
                         "default": 12,
-                        "description": "Maximum number of completion items to show"
+                        "description": "Text Completion: Maximum number of completion items to show"
                     },
                     "i-want-all.completionLookHistory": {
                         "type": "boolean",
                         "default": false,
-                        "description": "Look into all open tabs for completions"
+                        "description": "Text Completion: Look into all open tabs for completions"
                     },
                     "i-want-all.completionSpeed": {
                         "type": "integer",
                         "default": 100,
-                        "description": "Time in milliseconds to check for completions"
+                        "description": "Text Completion: Time in milliseconds to check for completions"
                     },
-                    "i-want-all.QWIN_FILESIZELIMIT": {
+                    "i-want-all.fileSizeLimit": {
                         "type": "integer",
                         "default": 102400,
-                        "description": "Maximum file size to scan for completions"
+                        "description": "Text Completion: Maximum file size to scan for completions"
                     }
                 }
             }
