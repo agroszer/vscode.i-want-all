@@ -129,10 +129,15 @@ export class TextCompletionManager implements vscode.Disposable {
     });
 
     const documents = lookHistory
-      ? this.getDocumentsFromTabs()
+      ? vscode.workspace.textDocuments
       : [vscode.window.activeTextEditor?.document].filter(
           (doc): doc is vscode.TextDocument => doc !== undefined
         );
+    // const documents = lookHistory
+    //   ? this.getDocumentsFromTabs()
+    //   : [vscode.window.activeTextEditor?.document].filter(
+    //       (doc): doc is vscode.TextDocument => doc !== undefined
+    //     );
     console.log(`Searching in ${documents.length} documents.`);
 
     const regex = new RegExp(`\\b${word}\\w*`, ignoreCase ? "gi" : "g");
@@ -146,11 +151,17 @@ export class TextCompletionManager implements vscode.Disposable {
     const allMatches: { word: string; distance: number }[] = [];
 
     for (const doc of documents) {
-      if (doc.uri.scheme !== "file" && doc.uri.scheme !== "untitled") {
-        console.log(`Skipping document with scheme: ${doc.uri.scheme}`);
+      let text: string;
+      try {
+        text = doc.getText();
+      } catch (e) {
+        console.warn(
+          `Could not read text from document ${doc.uri.toString()}:`,
+          e
+        );
         continue;
       }
-      const text = doc.getText();
+
       if (text.length > fileSizeLimit) {
         console.log(
           `Skipping document ${doc.uri.fsPath} due to size: ${text.length} > ${fileSizeLimit}`
