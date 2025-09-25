@@ -81,32 +81,32 @@ export class TextCompletionManager implements vscode.Disposable {
     this._onDidChangeCompletionList.fire();
   }
 
-  private getDocumentsFromTabs(): vscode.TextDocument[] {
-    console.log(
-      "All tabs:",
-      JSON.stringify(
-        vscode.window.tabGroups.all.map(group =>
-          group.tabs.map(tab => ({
-            label: tab.label,
-            input: tab.input,
-          }))
-        ),
-        null,
-        2
-      )
-    );
-    const tabUris = new Set(
-      vscode.window.tabGroups.all
-        .map(group => group.tabs)
-        .flat()
-        .filter(tab => tab.input instanceof vscode.TabInputText)
-        .map(tab => (tab.input as vscode.TabInputText).uri.toString())
-    );
+  // private getDocumentsFromTabs(): vscode.TextDocument[] {
+  //   console.log(
+  //     "All tabs:",
+  //     JSON.stringify(
+  //       vscode.window.tabGroups.all.map(group =>
+  //         group.tabs.map(tab => ({
+  //           label: tab.label,
+  //           input: tab.input,
+  //         }))
+  //       ),
+  //       null,
+  //       2
+  //     )
+  //   );
+  //   const tabUris = new Set(
+  //     vscode.window.tabGroups.all
+  //       .map(group => group.tabs)
+  //       .flat()
+  //       .filter(tab => tab.input instanceof vscode.TabInputText)
+  //       .map(tab => (tab.input as vscode.TabInputText).uri.toString())
+  //   );
 
-    return vscode.workspace.textDocuments.filter(doc =>
-      tabUris.has(doc.uri.toString())
-    );
-  }
+  //   return vscode.workspace.textDocuments.filter(doc =>
+  //     tabUris.has(doc.uri.toString())
+  //   );
+  // }
 
   private async getCompletions(
     word: string,
