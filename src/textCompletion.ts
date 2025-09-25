@@ -32,7 +32,7 @@ export class TextCompletionManager implements vscode.Disposable {
   private onDidChangeTextEditorSelection(
     event: vscode.TextEditorSelectionChangeEvent
   ) {
-    console.log("onDidChangeTextEditorSelection triggered");
+    // console.log("onDidChangeTextEditorSelection triggered");
     const editor = event.textEditor;
     const position = event.selections[0]?.active; // Use optional chaining
 
@@ -69,7 +69,7 @@ export class TextCompletionManager implements vscode.Disposable {
       position,
       this.getCompletionMinWordLength()
     );
-    console.log("updateCompletions called with word:", word);
+    // console.log("updateCompletions called with word:", word);
 
     if (!word) {
       this._completions = [];
@@ -81,67 +81,35 @@ export class TextCompletionManager implements vscode.Disposable {
     this._onDidChangeCompletionList.fire();
   }
 
-  // private getDocumentsFromTabs(): vscode.TextDocument[] {
-  //   console.log(
-  //     "All tabs:",
-  //     JSON.stringify(
-  //       vscode.window.tabGroups.all.map(group =>
-  //         group.tabs.map(tab => ({
-  //           label: tab.label,
-  //           input: tab.input,
-  //         }))
-  //       ),
-  //       null,
-  //       2
-  //     )
-  //   );
-  //   const tabUris = new Set(
-  //     vscode.window.tabGroups.all
-  //       .map(group => group.tabs)
-  //       .flat()
-  //       .filter(tab => tab.input instanceof vscode.TabInputText)
-  //       .map(tab => (tab.input as vscode.TabInputText).uri.toString())
-  //   );
-
-  //   return vscode.workspace.textDocuments.filter(doc =>
-  //     tabUris.has(doc.uri.toString())
-  //   );
-  // }
-
   private async getCompletions(
     word: string,
     position: vscode.Position
   ): Promise<ITextCompletionItem[]> {
-    console.log(
-      `getCompletions called with word: "${word}" at position:`,
-      position
-    );
+    // console.log(
+    //   `getCompletions called with word: "${word}" at position:`,
+    //   position
+    // );
     const config = vscode.workspace.getConfiguration("i-want-all");
     const maxItems = config.get<number>("completionItems", 12);
     const ignoreCase = config.get<boolean>("completionIgnoreCase", false);
     const lookHistory = config.get<boolean>("completionLookHistory", false);
     const fileSizeLimit = config.get<number>("QWIN_FILESIZELIMIT", 102400);
-    console.log("Configuration:", {
-      maxItems,
-      ignoreCase,
-      lookHistory,
-      fileSizeLimit,
-    });
+    // console.log("Configuration:", {
+    //   maxItems,
+    //   ignoreCase,
+    //   lookHistory,
+    //   fileSizeLimit,
+    // });
 
     const documents = lookHistory
       ? vscode.workspace.textDocuments
       : [vscode.window.activeTextEditor?.document].filter(
           (doc): doc is vscode.TextDocument => doc !== undefined
         );
-    // const documents = lookHistory
-    //   ? this.getDocumentsFromTabs()
-    //   : [vscode.window.activeTextEditor?.document].filter(
-    //       (doc): doc is vscode.TextDocument => doc !== undefined
-    //     );
-    console.log(`Searching in ${documents.length} documents.`);
+    // console.log(`Searching in ${documents.length} documents.`);
 
     const regex = new RegExp(`\\b${word}\\w*`, ignoreCase ? "gi" : "g");
-    console.log("Using regex:", regex);
+    // console.log("Using regex:", regex);
 
     const activeEditor = vscode.window.activeTextEditor;
     const cursorOffset = activeEditor
@@ -163,9 +131,9 @@ export class TextCompletionManager implements vscode.Disposable {
       }
 
       if (text.length > fileSizeLimit) {
-        console.log(
-          `Skipping document ${doc.uri.fsPath} due to size: ${text.length} > ${fileSizeLimit}`
-        );
+        // console.log(
+        //   `Skipping document ${doc.uri.fsPath} due to size: ${text.length} > ${fileSizeLimit}`
+        // );
         continue;
       }
       let match;
@@ -180,18 +148,18 @@ export class TextCompletionManager implements vscode.Disposable {
           matchCount++;
         }
       }
-      console.log(`Found ${matchCount} matches in ${doc.uri.fsPath}`);
+      // console.log(`Found ${matchCount} matches in ${doc.uri.fsPath}`);
     }
 
-    console.log(
-      "All matches before sorting:",
-      allMatches.map(m => m.word)
-    );
+    // console.log(
+    //   "All matches before sorting:",
+    //   allMatches.map(m => m.word)
+    // );
     allMatches.sort((a, b) => a.distance - b.distance);
-    console.log(
-      "All matches after sorting by distance:",
-      allMatches.map(m => m.word)
-    );
+    // console.log(
+    //   "All matches after sorting by distance:",
+    //   allMatches.map(m => m.word)
+    // );
 
     const words = new Set<string>();
     for (const match of allMatches) {
@@ -201,7 +169,7 @@ export class TextCompletionManager implements vscode.Disposable {
       words.add(match.word);
     }
 
-    console.log("getCompletions found:", Array.from(words));
+    // console.log("getCompletions found:", Array.from(words));
     return Array.from(words).map((value, index) => ({ value, index }));
   }
 
