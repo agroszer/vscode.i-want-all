@@ -137,7 +137,7 @@ export class TextCompletionManager implements vscode.Disposable {
         continue;
       }
       let match;
-      let matchCount = 0;
+      // let matchCount = 0;
       while ((match = regex.exec(text)) !== null) {
         if (match[0] !== word) {
           const distance =
@@ -145,7 +145,7 @@ export class TextCompletionManager implements vscode.Disposable {
               ? Math.abs(match.index - cursorOffset)
               : Infinity;
           allMatches.push({ word: match[0], distance });
-          matchCount++;
+          // matchCount++;
         }
       }
       // console.log(`Found ${matchCount} matches in ${doc.uri.fsPath}`);
