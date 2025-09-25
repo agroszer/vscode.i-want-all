@@ -85,19 +85,31 @@ export class TextCompletionManager implements vscode.Disposable {
     word: string,
     position: vscode.Position
   ): Promise<ITextCompletionItem[]> {
+    console.log(
+      `getCompletions called with word: "${word}" at position:`,
+      position
+    );
     const config = vscode.workspace.getConfiguration("i-want-all");
     const maxItems = config.get<number>("completionItems", 12);
     const ignoreCase = config.get<boolean>("completionIgnoreCase", false);
     const lookHistory = config.get<boolean>("completionLookHistory", false);
     const fileSizeLimit = config.get<number>("QWIN_FILESIZELIMIT", 102400);
+    console.log("Configuration:", {
+      maxItems,
+      ignoreCase,
+      lookHistory,
+      fileSizeLimit,
+    });
 
     const documents = lookHistory
       ? vscode.workspace.textDocuments
       : [vscode.window.activeTextEditor?.document].filter(
           (doc): doc is vscode.TextDocument => doc !== undefined
         );
+    console.log(`Searching in ${documents.length} documents.`);
 
     const regex = new RegExp(`\\b${word}\\w*`, ignoreCase ? "gi" : "g");
+    console.log("Using regex:", regex);
 
     const activeEditor = vscode.window.activeTextEditor;
     const cursorOffset = activeEditor
@@ -108,13 +120,18 @@ export class TextCompletionManager implements vscode.Disposable {
 
     for (const doc of documents) {
       if (doc.uri.scheme !== "file" && doc.uri.scheme !== "untitled") {
+        console.log(`Skipping document with scheme: ${doc.uri.scheme}`);
         continue;
       }
       const text = doc.getText();
       if (text.length > fileSizeLimit) {
+        console.log(
+          `Skipping document ${doc.uri.fsPath} due to size: ${text.length} > ${fileSizeLimit}`
+        );
         continue;
       }
       let match;
+      let matchCount = 0;
       while ((match = regex.exec(text)) !== null) {
         if (match[0] !== word) {
           const distance =
@@ -122,11 +139,21 @@ export class TextCompletionManager implements vscode.Disposable {
               ? Math.abs(match.index - cursorOffset)
               : Infinity;
           allMatches.push({ word: match[0], distance });
+          matchCount++;
         }
       }
+      console.log(`Found ${matchCount} matches in ${doc.uri.fsPath}`);
     }
 
+    console.log(
+      "All matches before sorting:",
+      allMatches.map(m => m.word)
+    );
     allMatches.sort((a, b) => a.distance - b.distance);
+    console.log(
+      "All matches after sorting by distance:",
+      allMatches.map(m => m.word)
+    );
 
     const words = new Set<string>();
     for (const match of allMatches) {
