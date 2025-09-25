@@ -102,7 +102,7 @@ export class TextCompletionManager implements vscode.Disposable {
     });
 
     const documents = lookHistory
-      ? vscode.workspace.textDocuments
+      ? vscode.window.visibleTextEditors.map(editor => editor.document)
       : [vscode.window.activeTextEditor?.document].filter(
           (doc): doc is vscode.TextDocument => doc !== undefined
         );
