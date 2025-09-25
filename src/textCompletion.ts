@@ -81,6 +81,20 @@ export class TextCompletionManager implements vscode.Disposable {
     this._onDidChangeCompletionList.fire();
   }
 
+  private getDocumentsFromTabs(): vscode.TextDocument[] {
+    const tabUris = new Set(
+      vscode.window.tabGroups.all
+        .map(group => group.tabs)
+        .flat()
+        .filter(tab => tab.input instanceof vscode.TabInputText)
+        .map(tab => (tab.input as vscode.TabInputText).uri.toString())
+    );
+
+    return vscode.workspace.textDocuments.filter(doc =>
+      tabUris.has(doc.uri.toString())
+    );
+  }
+
   private async getCompletions(
     word: string,
     position: vscode.Position
@@ -102,7 +116,7 @@ export class TextCompletionManager implements vscode.Disposable {
     });
 
     const documents = lookHistory
-      ? vscode.window.visibleTextEditors.map(editor => editor.document)
+      ? this.getDocumentsFromTabs()
       : [vscode.window.activeTextEditor?.document].filter(
           (doc): doc is vscode.TextDocument => doc !== undefined
         );
