@@ -82,6 +82,19 @@ export class TextCompletionManager implements vscode.Disposable {
   }
 
   private getDocumentsFromTabs(): vscode.TextDocument[] {
+    console.log(
+      "All tabs:",
+      JSON.stringify(
+        vscode.window.tabGroups.all.map(group =>
+          group.tabs.map(tab => ({
+            label: tab.label,
+            input: tab.input,
+          }))
+        ),
+        null,
+        2
+      )
+    );
     const tabUris = new Set(
       vscode.window.tabGroups.all
         .map(group => group.tabs)
