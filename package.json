@@ -690,6 +690,7 @@
         "organize": "node ./out/tools/organize.js",
         "release": "release-it",
         "test": "npm run compile && node ./out/test/runTests.js",
+        "test:cli": "vscode-test",
         "vscode:prepublish": "npm run clean && npm run compile",
         "watch": "tsc -watch -p ./"
     },
@@ -708,6 +709,7 @@
         "@types/vscode": "1.75.0",
         "@typescript-eslint/eslint-plugin": "^5.55.0",
         "@typescript-eslint/parser": "^5.55.0",
+        "@vscode/test-cli": "^0.0.11",
         "@vscode/test-electron": "^2.5.2",
         "conventional-changelog-cli": "^2.2.2",
         "decache": "^4.6.1",
