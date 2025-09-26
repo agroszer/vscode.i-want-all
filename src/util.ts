@@ -35,19 +35,29 @@ export function getPrefix(index: number): string {
 
 import * as vscode from "vscode";
 
-const QWIN_SEPARATORS = " ./:";
+const SEPARATORS = " ./:";
 
 export function getWordAtPosition(
   document: vscode.TextDocument,
   position: vscode.Position,
   minWordLength: number
 ): string | undefined {
-  const line = document
-    .lineAt(position.line)
-    .text.substring(0, position.character);
-  const regex = `(\\w+[${QWIN_SEPARATORS}]?\\w{${minWordLength - 1}})$`;
-  const wordMatch = line.match(new RegExp(regex));
-  return wordMatch ? wordMatch[1] : undefined;
+  const line = document.lineAt(position.line).text;
+  if (position.character === 0) return undefined;
+  const uptoCursor = line.substring(0, position.character);
+  const prevChar = uptoCursor[uptoCursor.length - 1];
+  // If cursor is at a separator, return word before separator plus separator
+  if (SEPARATORS.includes(prevChar)) {
+    // Find the word before the separator
+    const wordMatch = uptoCursor.match(
+      new RegExp(`(\\w{${minWordLength},})[${SEPARATORS}]$`)
+    );
+    return wordMatch ? wordMatch[1] + prevChar : undefined;
+  } else {
+    // Find the word ending at the cursor
+    const wordMatch = uptoCursor.match(new RegExp(`(\\w{${minWordLength},})$`));
+    return wordMatch ? wordMatch[1] : undefined;
+  }
 }
 
 export function replaceWordAtPosition(

@@ -108,7 +108,10 @@ export class TextCompletionManager implements vscode.Disposable {
         );
     // console.log(`Searching in ${documents.length} documents.`);
 
-    const regex = new RegExp(`\\b${word}\\w*`, ignoreCase ? "gi" : "g");
+    // Escape word for regex
+    const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const safeWord = escapeRegExp(word);
+    const regex = new RegExp(`\\b${safeWord}\\w*`, ignoreCase ? "gi" : "g");
     // console.log("Using regex:", regex);
 
     const activeEditor = vscode.window.activeTextEditor;
