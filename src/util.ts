@@ -45,14 +45,17 @@ export function getWordAtPosition(
   const line = document.lineAt(position.line).text;
   if (position.character === 0) return undefined;
   const uptoCursor = line.substring(0, position.character);
-  const prevChar = uptoCursor[uptoCursor.length - 1];
-  // If cursor is at a separator, return word before separator plus separator
-  if (SEPARATORS.includes(prevChar)) {
-    // Find the word before the separator
-    const wordMatch = uptoCursor.match(
-      new RegExp(`(\\w{${minWordLength},})[${SEPARATORS}]$`)
+
+  if (SEPARATORS) {
+    const myregexp = new RegExp(
+      "(\\w+[" + SEPARATORS + "]?\\w{0," + (minWordLength - 1) + "})$"
     );
-    return wordMatch ? wordMatch[1] + prevChar : undefined;
+    const wordMatch = uptoCursor.match(myregexp);
+    if (wordMatch) {
+      if (wordMatch[1].length >= minWordLength) {
+        return wordMatch[1];
+      }
+    }
   } else {
     // Find the word ending at the cursor
     const wordMatch = uptoCursor.match(new RegExp(`(\\w{${minWordLength},})$`));
