@@ -17,7 +17,7 @@ suiteSetup(async function () {
 suite("Extension Tests", function () {
   test("Active Extension", async function () {
     const ext = vscode.extensions.getExtension(
-      "agroszer.manage-all"
+      "agroszer.i-want-all"
     ) as vscode.Extension<any>;
 
     assert.ok(ext, "Extension not found");

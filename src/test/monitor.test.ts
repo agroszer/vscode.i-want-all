@@ -132,7 +132,8 @@ suite("Monitor Tests", function () {
 
     editor.selections = [new vscode.Selection(0, 0, 0, 11)];
 
-    await vscode.commands.executeCommand("editor.action.clipboardCopyAction");
+    // Use external clipboard to simulate an external change
+    await externalClipboard.writeText("Lorem ipsum");
 
     await sleep(monitor.checkInterval + 300);
 

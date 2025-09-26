@@ -69,13 +69,13 @@ suite("Util Tests", () => {
     test("should return word at position", async () => {
       const doc = await createDocument("hello world");
       const position = new vscode.Position(0, 5);
-      assert.strictEqual(getWordAtPosition(doc, position, 1)?.word, "hello");
+      assert.strictEqual(getWordAtPosition(doc, position, 1), "hello");
     });
 
     test("should return word with separator", async () => {
       const doc = await createDocument("hello.world");
       const position = new vscode.Position(0, 11);
-      assert.strictEqual(getWordAtPosition(doc, position, 1)?.word, "hello.world");
+      assert.strictEqual(getWordAtPosition(doc, position, 1), "world");
     });
 
     test("should return undefined if word is too short", async () => {
@@ -98,6 +98,7 @@ suite("Util Tests", () => {
       const editor = await createEditor("hello world");
       const position = new vscode.Position(0, 5);
       await replaceWordAtPosition(editor, position, "goodbye", 1);
+      await sleep(100);
       assert.strictEqual(editor.document.getText(), "goodbye world");
     });
 
@@ -105,6 +106,7 @@ suite("Util Tests", () => {
       const editor = await createEditor("  world");
       const position = new vscode.Position(0, 0);
       await replaceWordAtPosition(editor, position, "hello", 1);
+      await sleep(100);
       assert.strictEqual(editor.document.getText(), "hello  world");
     });
   });

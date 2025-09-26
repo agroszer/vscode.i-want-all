@@ -22,7 +22,7 @@ async function go() {
       version: process.env.CODE_VERSION,
       extensionDevelopmentPath,
       extensionTestsPath,
-      launchArgs: ["--disable-extensions"],
+      launchArgs: ["--disable-extensions", "--no-sandbox", "--disable-gpu"],
     });
   } catch (err) {
     console.error("Failed to run tests");
