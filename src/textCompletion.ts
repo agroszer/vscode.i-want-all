@@ -111,11 +111,39 @@ export class TextCompletionManager implements vscode.Disposable {
       });
     }
 
-    const documents = lookHistory
-      ? vscode.workspace.textDocuments
-      : [vscode.window.activeTextEditor?.document].filter(
-          (doc): doc is vscode.TextDocument => doc !== undefined
-        );
+    let documents: vscode.TextDocument[];
+    if (lookHistory) {
+      const allTabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
+      if (ENABLE_TEXT_COMPLETION_LOG) {
+        console.log(`Found ${allTabs.length} tabs:`);
+        allTabs.forEach((tab, idx) => {
+          const title = (tab as any).label || (tab as any).title || "[no title]";
+          console.log(`Tab #${idx + 1}: ${title}`);
+        });
+      }
+      // For each tab with a URI, find the corresponding TextDocument
+      documents = allTabs
+        .map(tab => {
+          const input: any = tab.input;
+          if (
+            input &&
+            typeof input === "object" &&
+            "uri" in input &&
+            input.uri &&
+            typeof input.uri.toString === "function"
+          ) {
+            return vscode.workspace.textDocuments.find(
+              doc => doc.uri.toString() === input.uri.toString()
+            );
+          }
+          return undefined;
+        })
+        .filter((doc): doc is vscode.TextDocument => doc !== undefined);
+    } else {
+      documents = [vscode.window.activeTextEditor?.document].filter(
+        (doc): doc is vscode.TextDocument => doc !== undefined
+      );
+    }
     if (ENABLE_TEXT_COMPLETION_LOG) {
       console.log(`Searching in ${documents.length} documents.`);
     }
@@ -137,6 +165,9 @@ export class TextCompletionManager implements vscode.Disposable {
 
     for (const doc of documents) {
       let text: string;
+      if (ENABLE_TEXT_COMPLETION_LOG) {
+        console.log(`Searching in ${doc.uri.toString()}`);
+      }
       try {
         text = doc.getText();
       } catch (e) {
@@ -165,7 +196,7 @@ export class TextCompletionManager implements vscode.Disposable {
           // matchCount++;
         }
       }
-    // console.log(`Found ${matchCount} matches in ${doc.uri.fsPath}`);
+      // console.log(`Found ${matchCount} matches in ${doc.uri.fsPath}`);
     }
 
     if (ENABLE_TEXT_COMPLETION_LOG) {
