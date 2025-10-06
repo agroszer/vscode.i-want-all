@@ -128,6 +128,21 @@ suite("Util Tests", () => {
       const position = new vscode.Position(0, 2);
       assert.strictEqual(getWordAtPosition(doc, position, 3), undefined);
     });
+
+    test("should return word if near separator spec char first", async () => {
+      const doc = await createDocument('    "form');
+      //                                01234567890123
+      const position = new vscode.Position(0, 9);
+      assert.strictEqual(getWordAtPosition(doc, position, 3), "form");
+    });
+
+    test("should return word if match over minlength", async () => {
+      const doc = await createDocument('    "formulate');
+      //                                012345678901234
+      const position = new vscode.Position(0, 14);
+      assert.strictEqual(getWordAtPosition(doc, position, 3), "formulate");
+    });
+
   });
 
   suite("replaceWordAtPosition", () => {

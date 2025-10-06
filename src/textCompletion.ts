@@ -1,3 +1,5 @@
+// Global flag to enable/disable debug logging
+const ENABLE_TEXT_COMPLETION_LOG = true;
 import * as vscode from "vscode";
 import { getWordAtPosition, replaceWordAtPosition, getPrefix } from "./util"; // Import replaceWordAtPosition
 
@@ -32,7 +34,9 @@ export class TextCompletionManager implements vscode.Disposable {
   private onDidChangeTextEditorSelection(
     event: vscode.TextEditorSelectionChangeEvent
   ) {
-    // console.log("onDidChangeTextEditorSelection triggered");
+    if (ENABLE_TEXT_COMPLETION_LOG) {
+      console.log("onDidChangeTextEditorSelection triggered");
+    }
     const editor = event.textEditor;
     const position = event.selections[0]?.active; // Use optional chaining
 
@@ -69,7 +73,9 @@ export class TextCompletionManager implements vscode.Disposable {
       position,
       this.getCompletionMinWordLength()
     );
-    // console.log("updateCompletions called with word:", word);
+    if (ENABLE_TEXT_COMPLETION_LOG) {
+      console.log("updateCompletions called with word:", word);
+    }
 
     if (!word) {
       this._completions = [];
@@ -85,34 +91,42 @@ export class TextCompletionManager implements vscode.Disposable {
     word: string,
     position: vscode.Position
   ): Promise<ITextCompletionItem[]> {
-    // console.log(
-    //   `getCompletions called with word: "${word}" at position:`,
-    //   position
-    // );
+    if (ENABLE_TEXT_COMPLETION_LOG) {
+      console.log(
+        `getCompletions called with word: "${word}" at position:`,
+        position
+      );
+    }
     const config = vscode.workspace.getConfiguration("i-want-all");
     const maxItems = config.get<number>("completionItems", 12);
     const ignoreCase = config.get<boolean>("completionIgnoreCase", false);
     const lookHistory = config.get<boolean>("completionLookHistory", false);
     const fileSizeLimit = config.get<number>("fileSizeLimit", 102400);
-    // console.log("Configuration:", {
-    //   maxItems,
-    //   ignoreCase,
-    //   lookHistory,
-    //   fileSizeLimit,
-    // });
+    if (ENABLE_TEXT_COMPLETION_LOG) {
+      console.log("Configuration:", {
+        maxItems,
+        ignoreCase,
+        lookHistory,
+        fileSizeLimit,
+      });
+    }
 
     const documents = lookHistory
       ? vscode.workspace.textDocuments
       : [vscode.window.activeTextEditor?.document].filter(
           (doc): doc is vscode.TextDocument => doc !== undefined
         );
-    // console.log(`Searching in ${documents.length} documents.`);
+    if (ENABLE_TEXT_COMPLETION_LOG) {
+      console.log(`Searching in ${documents.length} documents.`);
+    }
 
     // Escape word for regex
     const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const safeWord = escapeRegExp(word);
     const regex = new RegExp(`\\b${safeWord}\\w*`, ignoreCase ? "gi" : "g");
-    // console.log("Using regex:", regex);
+    if (ENABLE_TEXT_COMPLETION_LOG) {
+      console.log("Using regex:", regex);
+    }
 
     const activeEditor = vscode.window.activeTextEditor;
     const cursorOffset = activeEditor
@@ -140,7 +154,7 @@ export class TextCompletionManager implements vscode.Disposable {
         continue;
       }
       let match;
-      // let matchCount = 0;
+    // let matchCount = 0;
       while ((match = regex.exec(text)) !== null) {
         if (match[0] !== word) {
           const distance =
@@ -151,18 +165,22 @@ export class TextCompletionManager implements vscode.Disposable {
           // matchCount++;
         }
       }
-      // console.log(`Found ${matchCount} matches in ${doc.uri.fsPath}`);
+    // console.log(`Found ${matchCount} matches in ${doc.uri.fsPath}`);
     }
 
-    // console.log(
-    //   "All matches before sorting:",
-    //   allMatches.map(m => m.word)
-    // );
+    if (ENABLE_TEXT_COMPLETION_LOG) {
+      console.log(
+        "All matches before sorting:",
+        allMatches.map(m => m.word)
+      );
+    }
     allMatches.sort((a, b) => a.distance - b.distance);
-    // console.log(
-    //   "All matches after sorting by distance:",
-    //   allMatches.map(m => m.word)
-    // );
+    if (ENABLE_TEXT_COMPLETION_LOG) {
+      console.log(
+        "All matches after sorting by distance:",
+        allMatches.map(m => m.word)
+      );
+    }
 
     const words = new Set<string>();
     for (const match of allMatches) {
@@ -172,7 +190,9 @@ export class TextCompletionManager implements vscode.Disposable {
       words.add(match.word);
     }
 
-    // console.log("getCompletions found:", Array.from(words));
+    if (ENABLE_TEXT_COMPLETION_LOG) {
+      console.log("getCompletions found:", Array.from(words));
+    }
     return Array.from(words).map((value, index) => ({ value, index }));
   }
 
