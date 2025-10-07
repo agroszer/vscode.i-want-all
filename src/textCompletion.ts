@@ -128,15 +128,14 @@ export class TextCompletionManager implements vscode.Disposable {
       word: string,
       regex: RegExp,
       maxItems: number,
-      foundWords: Set<string>
-    ): { word: string; distance: number }[] {
-      const matches: { word: string; distance: number }[] = [];
+      foundWords: Set<string>,
+      allMatches: { word: string; distance: number }[]
+    ): void {
       if (text.length > fileSizeLimit) {
         if (ENABLE_TEXT_COMPLETION_LOG) {
           console.log(`Skipping: ${doc.uri.toString()}`);
         }
-
-        return matches;
+        return;
       }
       let match;
       while ((match = regex.exec(text)) !== null) {
@@ -145,16 +144,16 @@ export class TextCompletionManager implements vscode.Disposable {
             cursorOffset !== -1
               ? Math.abs(match.index - cursorOffset)
               : Infinity;
-          matches.push({ word: match[0], distance });
+          allMatches.push({ word: match[0], distance });
+          allMatches.sort((a, b) => a.distance - b.distance);
           foundWords.add(match[0]);
           if (foundWords.size >= maxItems) break;
         }
       }
-      return matches;
     }
 
     const foundWords = new Set<string>();
-    let allMatches: { word: string; distance: number }[] = [];
+    const allMatches: { word: string; distance: number }[] = [];
 
     // Always process the current document first
     const currentDoc = vscode.window.activeTextEditor?.document;
@@ -162,16 +161,15 @@ export class TextCompletionManager implements vscode.Disposable {
       try {
         const text = currentDoc.getText();
         const cursorOffset = currentDoc.offsetAt(position);
-        allMatches = allMatches.concat(
-          findMatchesInText(
-            text,
-            currentDoc,
-            cursorOffset,
-            word,
-            regex,
-            maxItems,
-            foundWords
-          )
+        findMatchesInText(
+          text,
+          currentDoc,
+          cursorOffset,
+          word,
+          regex,
+          maxItems,
+          foundWords,
+          allMatches
         );
       } catch (e) {
         console.warn(`Could not read text from current document:`, e);
@@ -205,18 +203,16 @@ export class TextCompletionManager implements vscode.Disposable {
             const doc = await vscode.workspace.openTextDocument(uri);
             const text = doc.getText();
             // No cursorOffset for non-active docs
-            allMatches = allMatches.concat(
-              findMatchesInText(
-                text,
-                doc,
-                -1,
-                word,
-                regex,
-                maxItems,
-                foundWords
-              )
+            findMatchesInText(
+              text,
+              doc,
+              -1,
+              word,
+              regex,
+              maxItems,
+              foundWords,
+              allMatches
             );
-            if (foundWords.size >= maxItems) break;
           } catch (e) {
             console.warn(
               `Could not read text from tab file:`,
@@ -229,7 +225,7 @@ export class TextCompletionManager implements vscode.Disposable {
       }
     }
 
-    allMatches.sort((a, b) => a.distance - b.distance);
+  // allMatches is kept sorted in findMatchesInText
     if (ENABLE_TEXT_COMPLETION_LOG) {
       console.log(
         "All matches after sorting by distance:",
