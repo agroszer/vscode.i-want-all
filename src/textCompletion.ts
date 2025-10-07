@@ -111,122 +111,124 @@ export class TextCompletionManager implements vscode.Disposable {
       });
     }
 
-    let documents: vscode.TextDocument[];
-    if (lookHistory) {
-      const allTabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
-      if (ENABLE_TEXT_COMPLETION_LOG) {
-        console.log(`Found ${allTabs.length} tabs:`);
-        allTabs.forEach((tab, idx) => {
-          const title = (tab as any).label || (tab as any).title || "[no title]";
-          console.log(`Tab #${idx + 1}: ${title}`);
-        });
-      }
-      const tabDocs = allTabs
-        .map(tab => {
-          const input: any = tab.input;
-          if (ENABLE_TEXT_COMPLETION_LOG) {
-            console.log(`Tab properties:`, {
-              input,
-              hasUri: input && typeof input === "object" && "uri" in input,
-              uri:
-                input && typeof input === "object" && "uri" in input
-                  ? input.uri
-                  : undefined,
-              uriToString:
-                input &&
-                typeof input === "object" &&
-                "uri" in input &&
-                input.uri &&
-                typeof input.uri.toString === "function"
-                  ? input.uri.toString()
-                  : undefined,
-              hasGetText: input && typeof input.getText === "function"
-            });
-          }
-          if (
-            input &&
-            typeof input === "object" &&
-            typeof input.getText === "function" &&
-            "uri" in input &&
-            input.uri &&
-            typeof input.uri.toString === "function"
-          ) {
-            return input as vscode.TextDocument;
-          }
-          return undefined;
-        })
-        .filter((doc): doc is vscode.TextDocument => doc !== undefined);
-      // Always use the current file as the first document
-      const currentDoc = vscode.window.activeTextEditor?.document;
-      documents = currentDoc
-        ? [currentDoc, ...tabDocs.filter(doc => doc !== currentDoc)]
-        : tabDocs;
-    } else {
-      documents = [vscode.window.activeTextEditor?.document].filter(
-        (doc): doc is vscode.TextDocument => doc !== undefined
-      );
-    }
-    if (ENABLE_TEXT_COMPLETION_LOG) {
-      console.log(`Searching in ${documents.length} documents.`);
-    }
-
-    // Escape word for regex
-    const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    // Helper to escape regex
+    const escapeRegExp = (s: string) =>
+      s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const safeWord = escapeRegExp(word);
     const regex = new RegExp(`\\b${safeWord}\\w*`, ignoreCase ? "gi" : "g");
     if (ENABLE_TEXT_COMPLETION_LOG) {
       console.log("Using regex:", regex);
     }
 
-    const activeEditor = vscode.window.activeTextEditor;
-    const cursorOffset = activeEditor
-      ? activeEditor.document.offsetAt(position)
-      : -1;
-
-    const allMatches: { word: string; distance: number }[] = [];
-
-    for (const doc of documents) {
-      let text: string;
-      if (ENABLE_TEXT_COMPLETION_LOG) {
-        console.log(`Searching in ${doc.uri.toString()}`);
-      }
-      try {
-        text = doc.getText();
-      } catch (e) {
-        console.warn(
-          `Could not read text from document ${doc.uri.toString()}:`,
-          e
-        );
-        continue;
-      }
-
+    // Helper to find unique, distance-sorted matches in a document
+    function findMatchesInText(
+      text: string,
+      doc: vscode.TextDocument,
+      cursorOffset: number,
+      word: string,
+      regex: RegExp,
+      maxItems: number,
+      foundWords: Set<string>
+    ): { word: string; distance: number }[] {
+      const matches: { word: string; distance: number }[] = [];
       if (text.length > fileSizeLimit) {
-        // console.log(
-        //   `Skipping document ${doc.uri.fsPath} due to size: ${text.length} > ${fileSizeLimit}`
-        // );
-        continue;
+        if (ENABLE_TEXT_COMPLETION_LOG) {
+          console.log(`Skipping: ${doc.uri.toString()}`);
+        }
+
+        return matches;
       }
       let match;
-    // let matchCount = 0;
       while ((match = regex.exec(text)) !== null) {
-        if (match[0] !== word) {
+        if (match[0] !== word && !foundWords.has(match[0])) {
           const distance =
-            doc === activeEditor?.document && cursorOffset !== -1
+            cursorOffset !== -1
               ? Math.abs(match.index - cursorOffset)
               : Infinity;
-          allMatches.push({ word: match[0], distance });
-          // matchCount++;
+          matches.push({ word: match[0], distance });
+          foundWords.add(match[0]);
+          if (foundWords.size >= maxItems) break;
         }
       }
-      // console.log(`Found ${matchCount} matches in ${doc.uri.fsPath}`);
+      return matches;
     }
 
-    if (ENABLE_TEXT_COMPLETION_LOG) {
-      console.log(
-        "All matches before sorting:",
-        allMatches.map(m => m.word)
-      );
+    const foundWords = new Set<string>();
+    let allMatches: { word: string; distance: number }[] = [];
+
+    // Always process the current document first
+    const currentDoc = vscode.window.activeTextEditor?.document;
+    if (currentDoc) {
+      try {
+        const text = currentDoc.getText();
+        const cursorOffset = currentDoc.offsetAt(position);
+        allMatches = allMatches.concat(
+          findMatchesInText(
+            text,
+            currentDoc,
+            cursorOffset,
+            word,
+            regex,
+            maxItems,
+            foundWords
+          )
+        );
+      } catch (e) {
+        console.warn(`Could not read text from current document:`, e);
+      }
     }
+
+    // If lookHistory, process all open tabs of type TabInputText
+    if (lookHistory && foundWords.size < maxItems) {
+      const allTabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
+      if (ENABLE_TEXT_COMPLETION_LOG) {
+        console.log(`Found ${allTabs.length} tabs:`);
+        allTabs.forEach((tab, idx) => {
+          const title =
+            (tab as any).label || (tab as any).title || "[no title]";
+          console.log(`Tab #${idx + 1}: ${title}`);
+        });
+      }
+      for (const tab of allTabs) {
+        if (tab.input) {
+          const uri = (tab.input as any).uri;
+          // Skip current document
+          if (currentDoc && currentDoc.uri.toString() === uri.toString()) {
+            continue;
+          }
+
+          if (ENABLE_TEXT_COMPLETION_LOG) {
+            console.log(`Looking in: ${uri.toString()}`);
+          }
+
+          try {
+            const doc = await vscode.workspace.openTextDocument(uri);
+            const text = doc.getText();
+            // No cursorOffset for non-active docs
+            allMatches = allMatches.concat(
+              findMatchesInText(
+                text,
+                doc,
+                -1,
+                word,
+                regex,
+                maxItems,
+                foundWords
+              )
+            );
+            if (foundWords.size >= maxItems) break;
+          } catch (e) {
+            console.warn(
+              `Could not read text from tab file:`,
+              uri.toString(),
+              e
+            );
+          }
+        }
+        if (foundWords.size >= maxItems) break;
+      }
+    }
+
     allMatches.sort((a, b) => a.distance - b.distance);
     if (ENABLE_TEXT_COMPLETION_LOG) {
       console.log(
@@ -234,19 +236,9 @@ export class TextCompletionManager implements vscode.Disposable {
         allMatches.map(m => m.word)
       );
     }
-
-    const words = new Set<string>();
-    for (const match of allMatches) {
-      if (words.size >= maxItems) {
-        break;
-      }
-      words.add(match.word);
-    }
-
-    if (ENABLE_TEXT_COMPLETION_LOG) {
-      console.log("getCompletions found:", Array.from(words));
-    }
-    return Array.from(words).map((value, index) => ({ value, index }));
+    return allMatches
+      .slice(0, maxItems)
+      .map((m, index) => ({ value: m.word, index }));
   }
 
   private getCompletionMinWordLength(): number {
