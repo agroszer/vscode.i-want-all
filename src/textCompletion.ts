@@ -121,28 +121,18 @@ export class TextCompletionManager implements vscode.Disposable {
           console.log(`Tab #${idx + 1}: ${title}`);
         });
       }
-      // For each tab with a URI, find the corresponding TextDocument
-      let tabDocs = allTabs
+      const tabDocs = allTabs
         .map(tab => {
           const input: any = tab.input;
-          if (ENABLE_TEXT_COMPLETION_LOG) {
-            console.log(`Tab properties:`, {
-              input,
-              hasUri: input && typeof input === "object" && "uri" in input,
-              uri: input && typeof input === "object" && "uri" in input ? input.uri : undefined,
-              uriToString: input && typeof input === "object" && "uri" in input && input.uri && typeof input.uri.toString === "function" ? input.uri.toString() : undefined
-            });
-          }
           if (
             input &&
             typeof input === "object" &&
+            typeof input.getText === "function" &&
             "uri" in input &&
             input.uri &&
             typeof input.uri.toString === "function"
           ) {
-            return vscode.workspace.textDocuments.find(
-              doc => doc.uri.toString() === input.uri.toString()
-            );
+            return input as vscode.TextDocument;
           }
           return undefined;
         })
