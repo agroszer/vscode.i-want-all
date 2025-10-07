@@ -122,7 +122,7 @@ export class TextCompletionManager implements vscode.Disposable {
         });
       }
       // For each tab with a URI, find the corresponding TextDocument
-      documents = allTabs
+      let tabDocs = allTabs
         .map(tab => {
           const input: any = tab.input;
           if (ENABLE_TEXT_COMPLETION_LOG) {
@@ -147,6 +147,11 @@ export class TextCompletionManager implements vscode.Disposable {
           return undefined;
         })
         .filter((doc): doc is vscode.TextDocument => doc !== undefined);
+      // Always use the current file as the first document
+      const currentDoc = vscode.window.activeTextEditor?.document;
+      documents = currentDoc
+        ? [currentDoc, ...tabDocs.filter(doc => doc !== currentDoc)]
+        : tabDocs;
     } else {
       documents = [vscode.window.activeTextEditor?.document].filter(
         (doc): doc is vscode.TextDocument => doc !== undefined
