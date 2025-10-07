@@ -124,6 +124,25 @@ export class TextCompletionManager implements vscode.Disposable {
       const tabDocs = allTabs
         .map(tab => {
           const input: any = tab.input;
+          if (ENABLE_TEXT_COMPLETION_LOG) {
+            console.log(`Tab properties:`, {
+              input,
+              hasUri: input && typeof input === "object" && "uri" in input,
+              uri:
+                input && typeof input === "object" && "uri" in input
+                  ? input.uri
+                  : undefined,
+              uriToString:
+                input &&
+                typeof input === "object" &&
+                "uri" in input &&
+                input.uri &&
+                typeof input.uri.toString === "function"
+                  ? input.uri.toString()
+                  : undefined,
+              hasGetText: input && typeof input.getText === "function"
+            });
+          }
           if (
             input &&
             typeof input === "object" &&
